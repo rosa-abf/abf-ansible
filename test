@@ -1,0 +1,16 @@
+[abf-worker-rpm]
+127.0.0.1:2224
+
+[abf-worker-iso]
+127.0.0.1:2224
+
+[abf-worker-publish]
+127.0.0.1:2224
+
+[abf-worker:children]
+abf-worker-rpm
+abf-worker-iso
+abf-worker-publish
+
+[abf-worker:vars]
+ansible_ssh_user=root

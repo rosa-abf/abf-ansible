@@ -1,0 +1,6 @@
+---
+# file: abf-worker.yml
+- hosts: abf-worker
+  roles:
+    - common
+    # - webtier

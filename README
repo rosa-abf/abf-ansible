@@ -1,0 +1,3 @@
+Startup:
+
+  ansible-playbook -i test site.yml
