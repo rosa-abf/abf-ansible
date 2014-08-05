@@ -7,7 +7,7 @@
     - curl
     - patch
     - tar
-    - libselinux-python
+    - libselinux-python # need for lineinfile module
 
     # TODO fix install this packages
     #- bsdtar
