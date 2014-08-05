@@ -13,4 +13,4 @@ abf-worker-iso
 abf-worker-publish
 
 [abf-worker:vars]
-ansible_ssh_user=root
+# ansible_ssh_user=root   Comment because remote_user dont rewrite this

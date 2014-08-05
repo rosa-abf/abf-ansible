@@ -1,6 +1,21 @@
 ---
 # file: abf-worker.yml
+
 - hosts: abf-worker
+  user: root
   roles:
     - common
-    # - webtier
+
+- name: manage application user
+  hosts: abf-worker
+  user: root
+  roles:
+    - user
+
+- name: setup rvm and ruby
+  hosts: abf-worker
+  remote_user: rosa
+  roles:
+    - ruby
+  vars:
+    ruby_version: 2.1.1
