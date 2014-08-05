@@ -1,21 +1,7 @@
 ---
 # file: roles/common/tasks/main.yml
 
-- name: be sure git is installed
-  yum: pkg=git state=installed
-  tags: git
-
-- name: be sure tar is installed
-  yum: pkg=tar state=installed
-  tags: tar
-
-- name: be sure redir is installed
-  yum: pkg=redir state=installed
-  tags: redir
-
-- name: be sure bsdtar is installed
-  yum: pkg=bsdtar state=installed
-  tags: bsdtar
+- include: soft.yml
 
 # - name: be sure ntp is configured
 #   template: src=ntp.conf.j2 dest=/etc/ntp.conf

@@ -1,0 +1,9 @@
+*~
+.bundle
+.rvmrc
+.DS_Store
+.swo
+.swn
+.ruby-gemset
+.ruby-version
+.localeapp

@@ -1,0 +1,14 @@
+---
+
+- name: install useful soft
+  yum: pkg={{ item }} state=present
+  with_items:
+    - git
+    - curl
+    - patch
+    - tar
+    - libselinux-python
+
+    # TODO fix install this packages
+    #- bsdtar
+    #- redir
