@@ -1,0 +1,6 @@
+[abf-worker-service]
+name=abf-worker-service
+baseurl=http://abf-downloads.rosalinux.ru/abf_personal/repository/rosa-server65/x86_64/abf-worker-service/release/
+enabled=1
+gpgcheck=0
+failovermethod=priority

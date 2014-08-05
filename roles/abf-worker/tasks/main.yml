@@ -1,0 +1,18 @@
+---
+
+- name: set default rvm gemset
+  shell: ~/.rvm/bin/rvm --default use {{ ruby_version }}@abf-worker --create
+
+- name: add abf-worker-service repo
+  copy: src=rosa-server65/abf-worker-service.repo dest=/etc/yum.repos.d/abf-worker-service.repo owner=root group=root mode=0644
+  sudo: yes
+  when: platform_name == "rosa-server65"
+
+- name: install the latest version of lxc, ...
+  yum: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - lxc
+    - redir
+    - bsdtar
+    - procmail

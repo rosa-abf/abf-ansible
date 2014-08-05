@@ -12,10 +12,12 @@
   roles:
     - user
 
-- name: setup rvm and ruby
+- name: setup rvm, ruby, gemset and etc.
   hosts: abf-worker
   remote_user: rosa
   roles:
     - ruby
+    - abf-worker
   vars:
     ruby_version: 2.1.1
+    platform_name: rosa-server65
