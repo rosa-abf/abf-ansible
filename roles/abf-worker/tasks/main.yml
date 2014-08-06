@@ -1,5 +1,7 @@
 ---
 
+- include: hosts.yml
+
 - name: set default rvm gemset
   shell: rvm ruby-{{ ruby_version }} do rvm --default use {{ ruby_version }}@abf-worker --create
 
@@ -16,3 +18,37 @@
     - redir
     - bsdtar
     - procmail
+
+- name: Creates store directory
+  sudo: yes
+  file: path={{ store_path }} state=directory mode=777 owner=rosa group=rosa
+
+- name: Creates project directory
+  file: path={{ project_path }} state=directory
+
+- name: Create extra directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ project_path }}/config"
+    - "{{ project_path }}/log"
+    - "{{ project_path }}/pids"
+    - "{{ store_path }}/lxc-containers"
+    - "{{ store_path }}/tmp"
+    - "{{ store_path }}/tmp-vagrant-boxes"
+    - "{{ store_path }}/vagrant-boxes"
+    - /home/rosa/.vagrant.d
+
+- name: Creates link to vagrant-boxes directory
+  file: src={{ store_path }}/vagrant-boxes dest=/home/rosa/boxes state=link
+
+- name: Creates link to tmp-vagrant-boxes directory
+  file: src={{ store_path }}/tmp-vagrant-boxes dest=/home/rosa/.vagrant.d/boxes state=link
+
+- name: removes def /var/lib/lxc directory
+  sudo: yes
+  file: path=/var/lib/lxc state=absent
+
+- name: creates link to /var/lib/lxc directory
+  sudo: yes
+  file: src={{ store_path }}/lxc-containers dest=/var/lib/lxc state=link
+
