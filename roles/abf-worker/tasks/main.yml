@@ -1,7 +1,7 @@
 ---
 
 - name: set default rvm gemset
-  shell: ~/.rvm/bin/rvm --default use {{ ruby_version }}@abf-worker --create
+  shell: rvm ruby-{{ ruby_version }} do rvm --default use {{ ruby_version }}@abf-worker --create
 
 - name: add abf-worker-service repo
   copy: src=rosa-server65/abf-worker-service.repo dest=/etc/yum.repos.d/abf-worker-service.repo owner=root group=root mode=0644
