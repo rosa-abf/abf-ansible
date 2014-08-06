@@ -1,0 +1,1 @@
+production: {{ resque_redis }}

@@ -1,11 +1,25 @@
 [abf-worker-rpm]
-127.0.0.1:2224
+127.0.0.1:2224 abf_token='server-abf-worker-rpm-1' log_server_host=0.0.0.0
+
+
 
 [abf-worker-iso]
-127.0.0.1:2224
+127.0.0.1:2225 abf_token='server-abf-worker-iso-1'
+
+[abf-worker-iso:vars]
+resque_redis=0.0.0.0:1234
+log_server_host=0.0.0.0
+
+
 
 [abf-worker-publish]
-127.0.0.1:2224
+127.0.0.1:2226 abf_token='server-abf-worker-publish-1'
+
+[abf-worker-publish:vars]
+resque_redis=0.0.0.0:1234
+log_server_host=0.0.0.0
+
+
 
 [abf-worker:children]
 abf-worker-rpm
@@ -13,4 +27,9 @@ abf-worker-iso
 abf-worker-publish
 
 [abf-worker:vars]
+# our public key
+airbrake_api_key='3c6209710087bfb53bd9604040a9c6ef'
+abf_url='https://abf.rosalinux.ru'
+file_store_url='http://file-store.rosalinux.ru'
 # ansible_ssh_user=root   Comment because remote_user dont rewrite this
+

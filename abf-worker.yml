@@ -21,5 +21,8 @@
   vars:
     ruby_version: 2.1.1
     platform_name: rosa-server65
-    project_path: /home/rosa/abf-worker
+    deploy_to: /home/rosa/abf-worker
     store_path: /mnt/store
+    user: rosa
+    repo: git@abf.io:abf/abf-worker-lxc.git
+    branch: master
