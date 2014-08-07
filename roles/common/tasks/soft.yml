@@ -8,3 +8,4 @@
     - patch
     - tar
     - libselinux-python # need for lineinfile module
+    - redis

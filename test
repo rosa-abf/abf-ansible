@@ -1,26 +1,40 @@
-rpm1     ansible_ssh_port=2224 ansible_ssh_host=127.0.0.1
-iso1     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
-publish1 ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
-
-[abf-worker-rpm]
-rpm1 abf_token='server-abf-worker-rpm-1' log_server_host=0.0.0.0 resque_redis=0.0.0.0:1234
+rpm1-moskow     ansible_ssh_port=2224 ansible_ssh_host=127.0.0.1
+iso1-moskow     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
+publish1-moskow ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
 
 
+[abf-worker-rpm-moskow]
+rpm1-moskow abf_token='server-abf-worker-rpm-1'
 
-[abf-worker-iso]
-iso1 abf_token='server-abf-worker-iso-1'
+[abf-worker-rpm:children]
+abf-worker-rpm-moskow
+
+[abf-worker-rpm:vars]
+log_server_host=0.0.0.0
+resque_redis=0.0.0.0:6379
+
+
+
+[abf-worker-iso-moskow]
+iso1-moskow abf_token='server-abf-worker-iso-1'
+
+[abf-worker-iso:children]
+abf-worker-iso-moskow
 
 [abf-worker-iso:vars]
-resque_redis=0.0.0.0:1234
+resque_redis=0.0.0.0:6379
 log_server_host=0.0.0.0
 
 
 
-[abf-worker-publish]
-publish1 abf_token='server-abf-worker-publish-1'
+[abf-worker-publish-moskow]
+127.0.0.1:2226 abf_token='server-abf-worker-publish-1'
+
+[abf-worker-publish:children]
+abf-worker-publish-moskow
 
 [abf-worker-publish:vars]
-resque_redis=0.0.0.0:1234
+resque_redis=0.0.0.0:6379
 log_server_host=0.0.0.0
 
 
@@ -28,12 +42,13 @@ log_server_host=0.0.0.0
 [abf-worker:children]
 abf-worker-rpm
 abf-worker-iso
-abf-worker-publish
+#abf-worker-publish
 
 [abf-worker:vars]
 # our public key
 airbrake_api_key='3c6209710087bfb53bd9604040a9c6ef'
 abf_url='https://abf.rosalinux.ru'
 file_store_url='http://file-store.rosalinux.ru'
-# ansible_ssh_user=root   Comment because remote_user dont rewrite this
 
+
+# ansible_ssh_user=root   Comment because remote_user dont rewrite this
