@@ -21,9 +21,9 @@ common: &common
 
   # Fix for DNS problems, configure proxy and etc
   vm_configs:
-    - sudo /bin/bash -c 'echo "195.19.76.233 file-store.rosalinux.ru" >> /etc/hosts'
-    - sudo /bin/bash -c 'echo "195.19.76.241 abf.rosalinux.ru" >> /etc/hosts'
-    - sudo /bin/bash -c 'echo "195.19.76.241 abf.io" >> /etc/hosts'
+    - sudo /bin/bash -c 'echo "{{ file_store_ip }} {{ file_store_domain }}" >> /etc/hosts'
+    - sudo /bin/bash -c 'echo "{{ abf_ip1 }} {{ abf_domain1 }}" >> /etc/hosts'
+    - sudo /bin/bash -c 'echo "{{ abf_ip2 }} {{ abf_domain2 }}" >> /etc/hosts'
     # Only for hetzner
     # - sudo /bin/bash -c 'echo "export ABF_DOWNLOADS_PROXY=176.9.26.227:3128" >> /etc/profile'
 

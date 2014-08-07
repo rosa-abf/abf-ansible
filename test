@@ -6,6 +6,14 @@ publish1-moskow ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
 [abf-worker-rpm-moskow]
 rpm1-moskow abf_token='server-abf-worker-rpm-1'
 
+[abf-worker-rpm-moskow:vars]
+file_store_ip     = 195.19.76.233
+file_store_domain = file-store.rosalinux.ru
+abf_ip1           = 195.19.76.241
+abf_domain1       = abf.rosalinux.ru
+abf_ip2           = 195.19.76.241
+abf_domain2       = abf.io
+
 [abf-worker-rpm:children]
 abf-worker-rpm-moskow
 
@@ -17,6 +25,14 @@ resque_redis=0.0.0.0:6379
 
 [abf-worker-iso-moskow]
 iso1-moskow abf_token='server-abf-worker-iso-1'
+
+[abf-worker-iso-moskow:vars]
+file_store_ip     = 195.19.76.233
+file_store_domain = file-store.rosalinux.ru
+abf_ip1           = 195.19.76.241
+abf_domain1       = abf.rosalinux.ru
+abf_ip2           = 195.19.76.241
+abf_domain2       = abf.io
 
 [abf-worker-iso:children]
 abf-worker-iso-moskow
@@ -45,10 +61,10 @@ abf-worker-iso
 #abf-worker-publish
 
 [abf-worker:vars]
+# ansible_ssh_user=root   Comment because remote_user dont rewrite this
+
 # our public key
 airbrake_api_key='3c6209710087bfb53bd9604040a9c6ef'
 abf_url='https://abf.rosalinux.ru'
 file_store_url='http://file-store.rosalinux.ru'
 
-
-# ansible_ssh_user=root   Comment because remote_user dont rewrite this
