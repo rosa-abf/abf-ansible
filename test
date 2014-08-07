@@ -1,10 +1,14 @@
+rpm1     ansible_ssh_port=2224 ansible_ssh_host=127.0.0.1
+iso1     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
+publish1 ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
+
 [abf-worker-rpm]
-127.0.0.1:2224 abf_token='server-abf-worker-rpm-1' log_server_host=0.0.0.0
+rpm1 abf_token='server-abf-worker-rpm-1' log_server_host=0.0.0.0 resque_redis=0.0.0.0:1234
 
 
 
 [abf-worker-iso]
-127.0.0.1:2225 abf_token='server-abf-worker-iso-1'
+iso1 abf_token='server-abf-worker-iso-1'
 
 [abf-worker-iso:vars]
 resque_redis=0.0.0.0:1234
@@ -13,7 +17,7 @@ log_server_host=0.0.0.0
 
 
 [abf-worker-publish]
-127.0.0.1:2226 abf_token='server-abf-worker-publish-1'
+publish1 abf_token='server-abf-worker-publish-1'
 
 [abf-worker-publish:vars]
 resque_redis=0.0.0.0:1234
