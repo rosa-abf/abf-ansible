@@ -1,0 +1,39 @@
+---
+
+- name: stop workers
+  command: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:stop
+    chdir={{ deploy_to }}/scm
+  ignore_errors: yes
+
+- name: clone repo
+  git: >
+    repo={{ repo }}
+    version={{ branch }}
+    dest={{ deploy_to }}/scm
+    update=true force=true
+  environment:
+    GIT_SSL_NO_VERIFY: true
+  register: clone_result
+
+- name: creates rvm gemset for deploy
+  shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@abf-worker-deploy --create
+
+- name: ensure abf-worker bundle is installed
+  command: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle install --without test
+    chdir={{ deploy_to }}/scm
+
+- name: creates config/deploy.rb
+  template: src=deploy.rb dest={{ deploy_to }}/scm/config/deploy.rb owner={{ user }}
+
+- name: creates config/deploy/production.rb
+  template: >
+    src=production.rb
+    dest={{ deploy_to }}/scm/config/deploy/production.rb
+    owner={{ user }}
+
+- name: run deploy:update
+  command: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:update
+    chdir={{ deploy_to }}/scm

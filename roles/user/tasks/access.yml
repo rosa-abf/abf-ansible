@@ -1,7 +1,7 @@
 ---
 
 - name: setup authorized_keys
-  authorized_key: user=rosa key="{{ item }}"
+  authorized_key: user={{ user }} key="{{ item }}"
   with_file:
     - ssh-keys/abf.pub
     - ssh-keys/avm.pub

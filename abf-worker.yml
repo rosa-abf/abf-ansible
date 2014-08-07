@@ -11,6 +11,8 @@
   user: root
   roles:
     - user
+  vars:
+    user: rosa
 
 - name: setup rvm, ruby, gemset and etc.
   hosts: abf-worker
@@ -24,5 +26,5 @@
     deploy_to: /home/rosa/abf-worker
     store_path: /mnt/store
     user: rosa
-    repo: git@abf.io:abf/abf-worker-lxc.git
+    repo: https://abf.io/abf/abf-worker-lxc.git
     branch: master

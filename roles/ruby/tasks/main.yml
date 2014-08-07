@@ -3,6 +3,9 @@
 - name: install rvm
   shell: \curl -L https://get.rvm.io | bash -s stable
 
+- name: install rvm requirements
+  shell: rvm requirements
+
 - name: install ruby
   shell: rvm install {{ ruby_version }}
 

@@ -1,10 +1,19 @@
 ---
 
 - name: create user rosa
-  user: state=present name=rosa createhome=yes shell=/bin/bash
+  user: state=present name={{ user }} createhome=yes shell=/bin/bash generate_ssh_key=yes
+
+- name: adds rosa own key to authorized_keys
+  shell: "cat /home/{{ user }}/.ssh/id_rsa.pub > /home/{{ user }}/.ssh/authorized_keys"
 
 - name: configure sudoers
-  lineinfile: "dest=/etc/sudoers backup=yes state=present regexp='^%rosa' line='%rosa ALL=(ALL) NOPASSWD: ALL'"
+  lineinfile: >
+    dest=/etc/sudoers
+    backup=yes
+    state=present
+    regexp='^%{{ user }}'
+    line='%{{ user }} ALL=(ALL) NOPASSWD: ALL'
   tags: config-sudoers
 
 - include: access.yml
+

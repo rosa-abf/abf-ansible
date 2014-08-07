@@ -30,6 +30,7 @@
   file: path={{ item }} state=directory
   with_items:
     - "{{ deploy_to }}"
+    - "{{ deploy_to }}/releases"
     - "{{ deploy_to }}/shared/config"
     - "{{ deploy_to }}/shared/log"
     - "{{ deploy_to }}/shared/pids"
@@ -45,9 +46,16 @@
     - { src: '{{ store_path }}/vagrant-boxes', dest: '/home/{{ user }}/boxes' }
     - { src: '{{ store_path }}/tmp-vagrant-boxes', dest: '/home/{{ user }}/.vagrant.d/boxes' }
 
-- name: removes def /var/lib/lxc directory
-  sudo: yes
+# Determine if a path exists and is a directory.  Note we need to test
+# both that p.stat.isdir actually exists, and also that it's set to true.
+- name: Determines type of /var/lib/lxc
+  stat: path=/var/lib/lxc
+  register: var_lib_lxc
+
+- name: removes /var/lib/lxc directory
   file: path=/var/lib/lxc state=absent
+  sudo: yes
+  when: var_lib_lxc.stat.isdir is defined and var_lib_lxc.stat.isdir == true
 
 - name: creates link to /var/lib/lxc directory
   sudo: yes
@@ -62,14 +70,4 @@
 - name: creates application.yml
   template: src=application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
 
-# - name: clone repo
-#   git: >
-#     repo={{ repo }}
-#     version={{ branch }}
-#     dest={{ deploy_to }}/scm
-#     update=true force=true bare=true
-#   environment:
-#     GIT_SSL_NO_VERIFY: true
-#   register: clone_result
-
-
+- include: deploy.yml
