@@ -35,6 +35,8 @@ set :rvm_install_ruby_threads, 1
 
 set :copy_dir, "/home/{{ user }}/tmp"
 
+set :normalize_asset_timestamps, false
+
 before "deploy:setup",        "deploy:init"
 
 after "deploy:update",        "deploy:init_keys"
