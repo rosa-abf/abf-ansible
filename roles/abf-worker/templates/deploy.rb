@@ -33,6 +33,7 @@ set :workers_count, 2
 
 set :rvm_install_ruby_threads, 1
 
+set :copy_dir, "/home/{{ user }}/tmp"
 
 before "deploy:setup",        "deploy:init"
 
@@ -95,7 +96,7 @@ namespace :deploy do
     run "cp -f #{fetch :release_path}/config/restart.sh #{fetch :shared_path}/config/restart.sh"
   end
 
-  task :iso, :roles => :iso do 
+  task :iso, :roles => :iso do
     run_worker_with_params({
       :INTERVAL => 5,
       :COUNT    => 4,

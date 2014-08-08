@@ -34,6 +34,7 @@
     - "{{ deploy_to }}/shared/config"
     - "{{ deploy_to }}/shared/log"
     - "{{ deploy_to }}/shared/pids"
+    - "{{ deploy_to }}/scm"
     - "{{ store_path }}/lxc-containers"
     - "{{ store_path }}/tmp"
     - "{{ store_path }}/tmp-vagrant-boxes"
