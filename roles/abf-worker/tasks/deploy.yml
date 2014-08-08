@@ -2,7 +2,7 @@
 
 - name: stop workers
   command: >
-    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:stop
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:stop ENV=production
     chdir={{ deploy_to }}/scm
   ignore_errors: yes
 
