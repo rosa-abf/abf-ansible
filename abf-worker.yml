@@ -28,3 +28,12 @@
     user: rosa
     repo: https://abf.io/abf/abf-worker-lxc.git
     branch: master
+
+- name: deploy abf-worker-rpm
+  hosts: abf-worker-rpm
+  remote_user: rosa
+  roles:
+    - abf-worker-rpm
+  vars:
+    ruby_version: 2.1.1
+    deploy_to: /home/rosa/abf-worker

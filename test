@@ -13,6 +13,11 @@ abf_ip1           = 195.19.76.241
 abf_domain1       = abf.rosalinux.ru
 abf_ip2           = 195.19.76.241
 abf_domain2       = abf.io
+max_workers_count = 2
+vm_x86_64         = 512
+vm_i586           = 512
+vm_cpus           = 2
+use_log_server    = false
 
 [abf-worker-rpm:children]
 abf-worker-rpm-moskow
@@ -57,7 +62,7 @@ log_server_host=0.0.0.0
 
 [abf-worker:children]
 abf-worker-rpm
-abf-worker-iso
+#abf-worker-iso
 #abf-worker-publish
 
 [abf-worker:vars]

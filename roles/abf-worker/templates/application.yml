@@ -12,12 +12,14 @@ common: &common
     rhel:
       path: 'https://abf.rosalinux.ru/abf/rhel-scripts/archive/'
       treeish: rhel-scripts-lxc
-  max_workers_count: 4
+  max_workers_count: {{ max_workers_count }}
   supported_platforms: ''
   supported_arches: ''
+  {% if use_log_server == true %}
   log_server:
     host: {{ log_server_host }}
     port: 6379
+  {% endif %}
 
   # Fix for DNS problems, configure proxy and etc
   vm_configs:
@@ -32,9 +34,9 @@ production:
   tmp_path: {{ store_path }}/tmp/abf-worker-tmp
   vms_path: /home/{{ user }}/boxes
   abf_api:
-    url: {{ abf_url }}
+    url: {{ abf_url }}/api/v1
     token: {{ abf_token }}
   vm:
-    x86_64: 8192
-    i586: 4096
-    cpus: 3
+    x86_64: {{ vm_x86_64 }}
+    i586: {{ vm_i586 }}
+    cpus: {{ vm_cpus }}
