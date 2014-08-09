@@ -24,5 +24,14 @@
     line='# Defaults requiretty'
   tags: config-sudoers
 
+- name: add /usr/sbin to .bashrc
+  lineinfile: >
+    dest=/home/{{ user }}/.bashrc
+    backup=yes
+    state=present
+    regexp='# Add /usr/sbin to PATH for scripting'
+    line='export PATH="$PATH:/usr/sbin" # Add /usr/sbin to PATH for scripting'
+  tags: config-bashrc
+
 - include: access.yml
 

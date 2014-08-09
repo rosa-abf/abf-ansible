@@ -19,6 +19,7 @@
   with_items:
     - lxc
     - redir
+    - wget
     - bsdtar
     - procmail
 
