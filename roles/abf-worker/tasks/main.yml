@@ -22,6 +22,11 @@
     - wget
     - bsdtar
     - procmail
+    - bridge-utils
+    - lxc-libs
+    - libcgroup
+
+- include: lxc_setup.yml
 
 - name: Creates store directory
   sudo: yes
