@@ -1,10 +1,16 @@
 ---
 
+- name: check capistrano
+  command: rvm {{ ruby_version }}@abf-worker-deploy do cap -V
+  register: check_capistrano
+  ignore_errors: yes
+
 - name: stop workers
   command: >
     rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:stop ENV=production
     chdir={{ deploy_to }}/scm
   ignore_errors: yes
+  when: check_capistrano|success
 
 - name: clone repo
   git: >
