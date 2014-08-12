@@ -1,5 +1,8 @@
+# ROSA-Server-6.5.1-x86_64-netinst.iso
 rpm1-moskow     ansible_ssh_port=2224 ansible_ssh_host=127.0.0.1
+# ROSA.FRESH.KDE.R4.5609.b.x86_64.iso
 rpm2-moskow     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
+# ubuntu-14.04.1-server-amd64.iso
 rpm3-moskow     ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
 
 iso1-moskow     ansible_ssh_port=2227 ansible_ssh_host=127.0.0.1
