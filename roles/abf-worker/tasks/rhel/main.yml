@@ -1,0 +1,32 @@
+---
+
+- name: add abf-worker-service repo
+  copy: >
+    src=rosa-server65/abf-worker-service.repo
+    dest=/etc/yum.repos.d/abf-worker-service.repo
+    owner=root group=root mode=0644
+  sudo: yes
+  when: platform_name == "rosa-server65"
+
+- name: install the latest version of lxc, ...
+  yum: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - lxc
+    - redir
+    - wget
+    - bsdtar
+    - procmail
+    - bridge-utils
+    - lxc-libs
+    - libcgroup
+
+- include: lxc_setup.yml
+
+# Use the existing virbr0 provided by libvirtd
+# See: https://github.com/fgrehm/vagrant-lxc/wiki/Usage-on-fedora-hosts#method-2-use-the-existing-virbr0-provided-by-libvirtd
+- name: Use the existing virbr0 provided by libvirtd
+  copy: >
+    src=rosa-server65/Vagrantfile
+    dest=/home/{{ user }}/.vagrant.d/Vagrantfile
+    owner={{ user }}

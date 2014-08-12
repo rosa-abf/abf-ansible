@@ -1,0 +1,10 @@
+---
+
+- name: add ~/.rvm/scripts/rvm to .bashrc
+  lineinfile: >
+    dest=/home/{{ user }}/.bashrc
+    backup=yes
+    state=present
+    insertbefore='BOF'
+    line='[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*'
+  tags: config-bashrc

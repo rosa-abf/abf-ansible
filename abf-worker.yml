@@ -22,7 +22,6 @@
     - abf-worker
   vars:
     ruby_version: 2.1.1
-    platform_name: rosa-server65
     deploy_to: /home/rosa/abf-worker
     store_path: /mnt/store
     user: rosa

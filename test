@@ -1,10 +1,14 @@
 rpm1-moskow     ansible_ssh_port=2224 ansible_ssh_host=127.0.0.1
-iso1-moskow     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
-publish1-moskow ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
+rpm2-moskow     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
+rpm3-moskow     ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
 
+iso1-moskow     ansible_ssh_port=2227 ansible_ssh_host=127.0.0.1
+publish1-moskow ansible_ssh_port=2228 ansible_ssh_host=127.0.0.1
 
 [abf-worker-rpm-moskow]
-rpm1-moskow abf_token='server-abf-worker-rpm-1'
+rpm1-moskow abf_token='server-abf-worker-rpm-1' platform_type='rhel' platform_name='rosa-server65'
+rpm2-moskow abf_token='server-abf-worker-rpm-2' platform_type='mdv' 
+rpm3-moskow abf_token='server-abf-worker-rpm-3' platform_type='deb'
 
 [abf-worker-rpm-moskow:vars]
 file_store_ip     = 195.19.76.233
@@ -62,8 +66,8 @@ log_server_host=0.0.0.0
 
 [abf-worker:children]
 abf-worker-rpm
-#abf-worker-iso
-#abf-worker-publish
+# abf-worker-iso
+# abf-worker-publish
 
 [abf-worker:vars]
 # ansible_ssh_user=root   Comment because remote_user dont rewrite this

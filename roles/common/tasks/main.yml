@@ -1,7 +1,14 @@
 ---
 # file: roles/common/tasks/main.yml
 
-- include: soft.yml
+- include: "deb/main.yml"
+  when: platform_type == 'deb'
+
+- include: "rhel/main.yml"
+  when: platform_type == 'rhel'
+
+- include: "mdv/main.yml"
+  when: platform_type == 'mdv'
 
 # - name: be sure ntp is configured
 #   template: src=ntp.conf.j2 dest=/etc/ntp.conf

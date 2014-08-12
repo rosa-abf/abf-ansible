@@ -1,0 +1,14 @@
+---
+
+- name: install the latest version of lxc, ...
+  urpmi: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - lxc
+    - redir
+    - wget
+    - bsdtar
+    - procmail
+    - libcgroup
+
+- include: lxc_setup.yml
