@@ -1,8 +1,5 @@
 ---
 
-# - hosts: deb-hosts
-#   include: "deb/main.yml"
-
 # - hosts: rhel-hosts
 #   include: "rhel/main.yml"
 
