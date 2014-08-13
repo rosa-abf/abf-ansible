@@ -1,0 +1,27 @@
+# ROSA-Server-6.5.1-x86_64-netinst.iso
+file-store-1     ansible_ssh_port=2231 ansible_ssh_host=127.0.0.1
+# ROSA.FRESH.KDE.R4.5609.b.x86_64.iso
+file-store-2     ansible_ssh_port=2232 ansible_ssh_host=127.0.0.1
+# ubuntu-14.04.1-server-amd64.iso
+file-store-3     ansible_ssh_port=2233 ansible_ssh_host=127.0.0.1
+
+
+[file-store]
+file-store-1 platform_type='rhel' platform_name='rosa-server65'
+file-store-2 platform_type='mdv' 
+file-store-3 platform_type='deb'
+
+[file-store:vars]
+file_store_ip     = 195.19.76.233
+file_store_domain = file-store.rosalinux.ru
+abf_ip1           = 195.19.76.241
+abf_domain1       = abf.rosalinux.ru
+abf_ip2           = 195.19.76.241
+abf_domain2       = abf.io
+
+# TODO
+# our public key
+# airbrake_api_key='3c6209710087bfb53bd9604040a9c6ef'
+abf_url='https://abf.rosalinux.ru'
+file_store_url='http://file-store.rosalinux.ru'
+

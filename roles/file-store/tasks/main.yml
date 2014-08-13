@@ -1,0 +1,13 @@
+---
+# file: roles/file-store/tasks/main.yml
+
+# TODO
+# - include: "deb/main.yml"
+#   when: platform_type == 'deb'
+
+# TODO
+# - include: "mdv/main.yml"
+#   when: platform_type == 'mdv'
+
+- include: "rhel/main.yml"
+  when: platform_type == 'rhel'

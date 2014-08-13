@@ -1,0 +1,28 @@
+---
+# file: file-store.yml
+
+- hosts: file-store
+  user: root
+  roles:
+    - common
+
+- name: manage application user
+  hosts: file-store
+  user: root
+  roles:
+    - user
+  vars:
+    user: rosa
+
+- name: setup rvm, ruby, gemset and etc., deploy
+  hosts: file-store
+  remote_user: rosa
+  roles:
+    - ruby
+    - file-store
+  vars:
+    ruby_version: 2.1.1
+    deploy_to: /srv/rosa_file_store
+    user: rosa
+    repo: https://abf.io/abf/rosa-file-store.git
+    branch: master
