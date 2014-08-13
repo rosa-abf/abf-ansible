@@ -1,0 +1,21 @@
+---
+
+- name: get iptables rules
+  shell: iptables -L
+  register: iptablesrules
+  always_run: yes
+  changed_when: false
+  sudo: true
+
+- name: add file-store iptable rule
+  command: /sbin/iptables -I INPUT 1 -p tcp --dport http -j ACCEPT -m comment --comment "file-store"
+  sudo: true
+  when: iptablesrules.stdout.find("file-store") == -1
+
+- name: save iptables
+  command: iptables-save
+  sudo: true
+
+- name: restart iptables
+  service: name=ufw state=restarted
+  sudo: true

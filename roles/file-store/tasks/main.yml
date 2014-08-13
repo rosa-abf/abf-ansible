@@ -11,3 +11,16 @@
 
 - include: "rhel/main.yml"
   when: platform_type == 'rhel'
+
+- name: Create directories
+  file: path={{ item }} state=directory
+  with_items:
+    - "{{ deploy_to }}"
+    - "{{ deploy_to }}/releases"
+    - "{{ deploy_to }}/shared/config"
+    - "{{ deploy_to }}/shared/tmp"
+    - "{{ deploy_to }}/shared/log"
+    - "{{ deploy_to }}/shared/pids"
+    - "{{ deploy_to }}/scm"
+
+# - include: iptables.yml
