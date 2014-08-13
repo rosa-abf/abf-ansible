@@ -1,7 +1,0 @@
----
-
-
-
-# file: site.yml
-- include: abf-worker.yml
-# - include: dbservers.yml
