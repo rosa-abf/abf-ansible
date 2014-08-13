@@ -1,0 +1,9 @@
+---
+
+- name: install useful soft
+  urpmi: pkg={{ item }} state=present
+  with_items:
+    - git
+    - curl
+    - patch
+    - tar

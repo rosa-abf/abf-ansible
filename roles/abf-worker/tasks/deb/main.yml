@@ -1,0 +1,11 @@
+---
+
+- name: install the latest version of lxc, ...
+  apt: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - lxc
+    - redir
+    - wget
+    - bsdtar
+    - procmail

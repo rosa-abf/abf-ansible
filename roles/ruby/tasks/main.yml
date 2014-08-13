@@ -1,13 +1,12 @@
 ---
 
-- name: install rvm
-  shell: \curl -L https://get.rvm.io | bash -s stable
+# - hosts: rhel-hosts
+#   include: "rhel/main.yml"
 
-- name: install rvm requirements
-  shell: rvm requirements
+- include: "mdv/main.yml"
+  when: platform_type == 'mdv'
 
-- name: install ruby
-  shell: rvm install {{ ruby_version }}
+- include: "deb/main.yml"
+  when: platform_type == 'deb'
 
-- name: set default ruby
-  shell: rvm ruby-{{ ruby_version }} do rvm use {{ ruby_version }} --default
+- include: default.yml
