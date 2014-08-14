@@ -1,32 +1,36 @@
 ---
 
-- name: add abf-worker-service repo
-  copy: >
-    src=rosa-server65/abf-worker-service.repo
-    dest=/etc/yum.repos.d/abf-worker-service.repo
-    owner=root group=root mode=0644
-  sudo: yes
-  when: platform_name == "rosa-server65"
-
-- name: install the latest version of lxc, ...
+- name: install some usefull soft
   yum: pkg={{ item }} state=present
   sudo: yes
   with_items:
-    - lxc
-    - redir
-    - wget
-    - bsdtar
-    - procmail
-    - bridge-utils
-    - lxc-libs
-    - libcgroup
+     - wget
+     - libcgroup
+     - procmail
+     - libarchive
+     - bridge-utils
+     - libvirt
+
+- name: add the EPEL repo
+  command: sudo rpm -ivh http://mirror.1000mbps.com/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
+  ignore_errors: yes
+
+- name: install the latest version of lxc
+  command: sudo yum -y install --enablerepo=epel-testing lxc lxc-libs lxc-templates debootstrap
+
+- name: add abf-worker-service repo
+  copy: >
+    src=roles/abf-worker/files/rosa-server65/abf-worker-service.repo
+    dest=/etc/yum.repos.d/abf-worker-service.repo
+    owner=root group=root mode=0644
+  sudo: yes
+#  when: platform_name == "rosa-server65"
+
+- name: install bsdtar, redir
+  yum: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+     - bsdtar
+     - redir
 
 - include: lxc_setup.yml
-
-# Use the existing virbr0 provided by libvirtd
-# See: https://github.com/fgrehm/vagrant-lxc/wiki/Usage-on-fedora-hosts#method-2-use-the-existing-virbr0-provided-by-libvirtd
-- name: Use the existing virbr0 provided by libvirtd
-  copy: >
-    src=rosa-server65/Vagrantfile
-    dest=/home/{{ user }}/.vagrant.d/Vagrantfile
-    owner={{ user }}

@@ -39,6 +39,21 @@
     - { src: '{{ store_path }}/vagrant-boxes', dest: '/home/{{ user }}/boxes' }
     - { src: '{{ store_path }}/tmp-vagrant-boxes', dest: '/home/{{ user }}/.vagrant.d/boxes' }
 
+# Use the existing virbr0 provided by libvirtd
+# See: https://github.com/fgrehm/vagrant-lxc/wiki/Usage-on-fedora-hosts#method-2-use-the-existing-virbr0-provided-by-libvirtd
+- name: Use the existing virbr0 provided by libvirtd
+  copy: >
+    src=roles/abf-worker/files/rosa-server65/Vagrantfile
+    dest=/home/{{ user }}/.vagrant.d/Vagrantfile
+    owner={{ user }}
+  when: platform_type == 'rhel'
+
+- name: copy box files (temporaly for speedup deploy)
+  copy: >
+    src=roles/abf-worker/files/boxes/
+    dest=/home/{{ user }}/boxes/
+    owner=rosa group=rosa mode=0644
+
 # Determine if a path exists and is a directory.  Note we need to test
 # both that p.stat.isdir actually exists, and also that it's set to true.
 - name: Determines type of /var/lib/lxc

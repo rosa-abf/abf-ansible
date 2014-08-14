@@ -4,14 +4,17 @@ rpm1-moskow     ansible_ssh_port=2224 ansible_ssh_host=127.0.0.1
 rpm2-moskow     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
 # ubuntu-14.04.1-server-amd64.iso
 rpm3-moskow     ansible_ssh_port=2226 ansible_ssh_host=127.0.0.1
+# centos7
+rpm4-centos7    ansible_ssh_port=2230 ansible_ssh_host=127.0.0.1
 
 iso1-moskow     ansible_ssh_port=2227 ansible_ssh_host=127.0.0.1
 publish1-moskow ansible_ssh_port=2228 ansible_ssh_host=127.0.0.1
 
 [abf-worker-rpm-moskow]
-rpm1-moskow abf_token='server-abf-worker-rpm-1' platform_type='rhel' platform_name='rosa-server65'
-rpm2-moskow abf_token='server-abf-worker-rpm-2' platform_type='mdv' 
-rpm3-moskow abf_token='server-abf-worker-rpm-3' platform_type='deb'
+rpm1-moskow  abf_token='server-abf-worker-rpm-1' platform_type='rhel' platform_name='rosa-server65'
+rpm2-moskow  abf_token='server-abf-worker-rpm-2' platform_type='mdv'
+rpm3-moskow  abf_token='server-abf-worker-rpm-3' platform_type='deb'
+rpm4-centos7 abf_token='server-abf-worker-rpm-4' platform_type='rhel'
 
 [abf-worker-rpm-moskow:vars]
 file_store_ip     = 195.19.76.233

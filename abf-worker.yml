@@ -26,6 +26,7 @@
     store_path: /mnt/store
     user: rosa
     repo: https://abf.io/abf/abf-worker-lxc.git
+    repo_with_auth: https://abf:abf@abf.io/abf/abf-worker-lxc.git
     branch: master
 
 - name: deploy abf-worker-rpm

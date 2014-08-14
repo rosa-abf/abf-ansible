@@ -1,31 +1,3 @@
-- name: start/enable cgconfig service
-  service: name=cgconfig state=started enabled=yes
-  sudo: true
-
-- name: start/enable cgred service
-  service: name=cgred state=started enabled=yes
-  sudo: true
-
-- name: autostart cgconfig service
-  command: sudo chkconfig --level 345 cgconfig on
-
-- name: autostart cgred service
-  command: sudo chkconfig --level 345 cgred on
-
-- name: create lxcbr0 interface
-  command: sudo brctl addbr lxcbr0
-  ignore_errors: yes
-
-- name: make the bridge persistent on reboot
-  sudo: true
-  copy: >
-    src=rosa-server65/ifcfg-lxcbr0
-    dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
-    owner={{ user }}
-
-- name: ifup lxcbr0
-  command: sudo ifup lxcbr0
-
 - name: enable IPv4 forwarding
   lineinfile: >
     dest=/etc/hosts
@@ -37,3 +9,7 @@
 - name: restart sysctl
   command: sudo sysctl -p
   when: restart_sysctl|success
+
+- name: start/enable libvirtd service
+  service: name=libvirtd state=started enabled=yes
+  sudo: true
