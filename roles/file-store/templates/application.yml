@@ -1,5 +1,5 @@
 common: &common
-  abf_url: 'https://abf.rosalinux.ru'
+  abf_url: {{ abf_url }}
   keys:
     secret_token: {{ file_store_secret_token }}
 
