@@ -43,6 +43,8 @@
   template: src=application.yml dest={{ deploy_to }}/scm/config/application.yml owner={{ user }}
 
 - name: run deploy:update
-  command: >
-    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:update ENV=production
+  # < /dev/null try fix user authorization
+  shell: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:update ENV=production < /dev/null
     chdir={{ deploy_to }}/scm
+
