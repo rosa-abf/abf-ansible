@@ -62,7 +62,7 @@
     - file-store
   vars:
     ruby_version: 2.1.1
-    deploy_to: /srv/rosa_file_store
+    deploy_to: /mnt/store/rosa_file_store
     user: rosa
     repo: https://abf.io/abf/rosa-file-store.git
     branch: master

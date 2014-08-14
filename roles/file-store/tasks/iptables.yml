@@ -1,21 +1,41 @@
 ---
+# file: roles/file-store/tasks/iptables.yml
 
-- name: get iptables rules
-  shell: iptables -L
-  register: iptablesrules
-  always_run: yes
-  changed_when: false
+# See: http://www.hashbangcode.com/blog/adding-iptables-rules-ansible
+# Or: https://github.com/ansible/ansible/issues/2459#issuecomment-28665207
+
+# - name: iptables | get iptables rules
+#   shell: iptables -L
+#   register: iptablesrules
+#   always_run: yes
+#   changed_when: false
+#   sudo: true
+
+# - name: iptables | add file-store iptable rule
+#   command: /sbin/iptables -I INPUT 1 -p tcp --dport http -j ACCEPT -m comment --comment "file-store"
+#   sudo: true
+#   when: iptablesrules.stdout.find("file-store") == -1
+
+# - name: iptables | save iptables
+#   command: iptables-save
+#   sudo: true
+
+# - name: iptables | restart iptables
+#   service: name=iptables state=restarted
+#   sudo: true
+
+
+- name: iptables | open the correct IPTables ports
   sudo: true
+  lineinfile: >
+    dest=/etc/sysconfig/iptables
+    regexp="^-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT$"
+    line="-A INPUT -p {{item.protocol}} -m {{item.protocol}} --dport {{item.port}} -j ACCEPT"
+    insertafter="^:OUTPUT ACCEPT \[\d*:\d*\]$"
+  with_items:
+    - { protocol: tcp, port: 80 }
+    # - { protocol: tcp, port: 443 }
 
-- name: add file-store iptable rule
-  command: /sbin/iptables -I INPUT 1 -p tcp --dport http -j ACCEPT -m comment --comment "file-store"
-  sudo: true
-  when: iptablesrules.stdout.find("file-store") == -1
-
-- name: save iptables
-  command: iptables-save
-  sudo: true
-
-- name: restart iptables
-  service: name=ufw state=restarted
+- name: iptables | restart iptables
+  action: service name=iptables state=restarted
   sudo: true

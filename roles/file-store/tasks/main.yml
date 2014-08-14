@@ -13,7 +13,8 @@
   when: platform_type == 'rhel'
 
 - name: Create directories
-  file: path={{ item }} state=directory
+  file: path={{ item }} state=directory owner={{ user }} group={{ user }}
+  sudo: yes
   with_items:
     - "{{ deploy_to }}"
     - "{{ deploy_to }}/releases"
@@ -21,6 +22,59 @@
     - "{{ deploy_to }}/shared/tmp"
     - "{{ deploy_to }}/shared/log"
     - "{{ deploy_to }}/shared/pids"
+    - "{{ deploy_to }}/shared/assets"
+    - "{{ deploy_to }}/shared/bundle"
     - "{{ deploy_to }}/scm"
+    - /mnt/store/file-store/uploads
+    - /mnt/store/file-store/tmp
+    - /mnt/store/file-store/tmp/0
+    - /mnt/store/file-store/tmp/1
+    - /mnt/store/file-store/tmp/2
+    - /mnt/store/file-store/tmp/3
+    - /mnt/store/file-store/tmp/4
+    - /mnt/store/file-store/tmp/5
+    - /mnt/store/file-store/tmp/6
+    - /mnt/store/file-store/tmp/7
+    - /mnt/store/file-store/tmp/8
+    - /mnt/store/file-store/tmp/9
 
-# - include: iptables.yml
+- name: creates application.yml
+  template: src=application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
+
+- name: creates database.yml
+  template: src=database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
+
+- name: get nginx version
+  command: nginx -v
+  register: nginx_version
+  always_run: yes
+  ignore_errors: yes
+  changed_when: false
+
+- include: nginx.yml
+  when: nginx_version.rc != 0
+
+- name: nginx | create nginx.conf
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+  sudo: yes
+
+- name: nginx | create /etc/nginx/conf.d directory
+  file: path=/etc/nginx/conf.d state=directory
+  sudo: yes
+
+- name: nginx | creates file-store.conf
+  template: src=file-store.conf dest=/etc/nginx/conf.d/file-store.conf
+  sudo: yes
+
+- name: nginx | stop nginx
+  sudo: yes
+  command: nginx -s stop
+  ignore_errors: yes
+
+- name: nginx | start nginx
+  sudo: yes
+  command: nginx
+
+- include: iptables.yml
+- include: deploy.yml
+
