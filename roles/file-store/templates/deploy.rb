@@ -61,7 +61,7 @@ namespace :deploy do
     # It will survive uploads folder between deployments
     # run "mkdir -p #{fetch :shared_path}/uploads"
     # run "ln -nfs #{fetch :shared_path}/uploads/ #{fetch :release_path}/uploads"
-    run "ln -nfs /mnt/store/file-store/uploads/ #{fetch :release_path}/uploads"
+    run "ln -nfs {{ upload_store }}/uploads/ #{fetch :release_path}/uploads"
   end
 
   task :symlink_pids, :roles => :app do

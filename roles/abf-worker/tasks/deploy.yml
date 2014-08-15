@@ -20,7 +20,6 @@
     update=true force=true
   environment:
     GIT_SSL_NO_VERIFY: true
-  register: clone_result
 
 - name: creates rvm gemset for deploy
   shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@abf-worker-deploy --create

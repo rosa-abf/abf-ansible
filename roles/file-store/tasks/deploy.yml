@@ -9,7 +9,6 @@
     update=true force=true
   environment:
     GIT_SSL_NO_VERIFY: true
-  register: clone_result
 
 - name: deploy | set default rvm gemset
   shell: rvm ruby-{{ ruby_version }} do rvm --default use {{ ruby_version }}@rosa-file-store --create
