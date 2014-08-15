@@ -2,3 +2,5 @@
 .DS_Store
 .swo
 .swn
+abf-worker.hosts
+file-store.hosts

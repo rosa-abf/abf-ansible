@@ -1,0 +1,80 @@
+---
+# file: roles/file-store/tasks/main.yml
+
+# TODO
+# - include: "deb/main.yml"
+#   when: platform_type == 'deb'
+
+# TODO
+# - include: "mdv/main.yml"
+#   when: platform_type == 'mdv'
+
+- include: "rhel/main.yml"
+  when: platform_type == 'rhel'
+
+- name: Create directories
+  file: path={{ item }} state=directory owner={{ user }} group={{ user }}
+  sudo: yes
+  with_items:
+    - "{{ deploy_to }}"
+    - "{{ deploy_to }}/releases"
+    - "{{ deploy_to }}/shared/config"
+    - "{{ deploy_to }}/shared/tmp"
+    - "{{ deploy_to }}/shared/log"
+    - "{{ deploy_to }}/shared/pids"
+    - "{{ deploy_to }}/shared/assets"
+    - "{{ deploy_to }}/shared/bundle"
+    - "{{ deploy_to }}/scm"
+    - "{{ upload_store }}/uploads"
+    - "{{ upload_store }}/tmp"
+    - "{{ upload_store }}/tmp/0"
+    - "{{ upload_store }}/tmp/1"
+    - "{{ upload_store }}/tmp/2"
+    - "{{ upload_store }}/tmp/3"
+    - "{{ upload_store }}/tmp/4"
+    - "{{ upload_store }}/tmp/5"
+    - "{{ upload_store }}/tmp/6"
+    - "{{ upload_store }}/tmp/7"
+    - "{{ upload_store }}/tmp/8"
+    - "{{ upload_store }}/tmp/9"
+
+- name: creates application.yml
+  template: src=application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
+
+- name: creates database.yml
+  template: src=database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
+
+- name: get nginx version
+  command: nginx -v
+  register: nginx_version
+  always_run: yes
+  ignore_errors: yes
+  changed_when: false
+
+- include: nginx.yml
+  when: nginx_version.rc != 0
+
+- name: nginx | create nginx.conf
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+  sudo: yes
+
+- name: nginx | create /etc/nginx/conf.d directory
+  file: path=/etc/nginx/conf.d state=directory
+  sudo: yes
+
+- name: nginx | creates file-store.conf
+  template: src=file-store.conf dest=/etc/nginx/conf.d/file-store.conf
+  sudo: yes
+
+- name: nginx | stop nginx
+  sudo: yes
+  command: nginx -s stop
+  ignore_errors: yes
+
+- name: nginx | start nginx
+  sudo: yes
+  command: nginx
+
+- include: iptables.yml
+- include: deploy.yml
+

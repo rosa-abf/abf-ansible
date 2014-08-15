@@ -1,0 +1,69 @@
+---
+# file: file-store.yml
+
+- hosts: file-store
+  user: root
+  roles:
+    - common
+
+- name: manage application user
+  hosts: file-store
+  user: root
+  roles:
+    - user
+  vars:
+    user: rosa
+
+- name: Install PostgreSQL
+  hosts: file-store
+  user: root
+  roles:
+    - PostgreSQL
+  vars:
+    # Basic settings
+    postgresql_version: 9.3
+    postgresql_encoding: 'UTF-8'
+    postgresql_locale: 'en_US.UTF-8'
+
+    postgresql_admin_user: postgres
+    postgresql_default_auth_method: trust
+
+    # postgresql_cluster_name: "main"
+    postgresql_cluster_name: "data"
+    postgresql_cluster_reset: false
+
+    # List of databases to be created (optional)
+    postgresql_databases:
+      - name: rosa_file_store
+        # flag to install the hstore extensions on this database (yes/no)
+        hstore: no
+
+    # List of users to be created (optional)
+    postgresql_users:
+      - name: rosa
+        pass:
+        # denotes if the password is already encrypted.
+        encrypted: no
+
+    # List of user privileges to be applied (optional)
+    postgresql_user_privileges:
+      # user name
+      - name: rosa
+        # database
+        db: rosa_file_store
+        # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+        priv: ALL
+
+- name: setup rvm, ruby, gemset and etc., deploy
+  hosts: file-store
+  remote_user: rosa
+  roles:
+    - ruby
+    - file-store
+  vars:
+    ruby_version: 2.1.1
+    deploy_to: /mnt/store/rosa_file_store
+    upload_store: /mnt/store/file-store
+    user: rosa
+    repo: https://abf.io/abf/rosa-file-store.git
+    branch: master

@@ -1,0 +1,7 @@
+common: &common
+  abf_url: {{ abf_url }}
+  keys:
+    secret_token: {{ file_store_secret_token }}
+
+production:
+  <<: *common
