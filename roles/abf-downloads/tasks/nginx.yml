@@ -1,6 +1,13 @@
 ---
 # file: roles/abf-downloads/tasks/nginx.yml
 
+- name: add abf-worker-service repo
+  copy: >
+    src=rosa-server65/abf-worker-service.repo
+    dest=/etc/yum.repos.d/abf-worker-service.repo
+    owner=root group=root mode=0644
+  when: platform_name == "rosa-server65"
+
 - name: nginx | install useful soft
   yum: pkg={{ item }} state=present
   with_items:
