@@ -12,6 +12,12 @@ All command should be called from local PC
     git clone git@abf.io:abf/abf-ansible.git
     cd abf-ansible
 
+## abf-downloads
+
+    cp abf-downloads.hosts.example abf-downloads.hosts
+    # Update "abf-worker.hosts" file
+    ansible-playbook -i abf-downloads.hosts abf-downloads.yml
+
 ## abf-worker
 
     cp abf-worker.hosts.example abf-worker.hosts
