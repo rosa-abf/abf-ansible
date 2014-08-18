@@ -1,0 +1,62 @@
+# ROSA-Server-6.5.1-x86_64-netinst.iso
+rosa-build-1     ansible_ssh_port=2251 ansible_ssh_host=127.0.0.1
+# ubuntu-14.04.1-server-amd64.iso
+rosa-build-2     ansible_ssh_port=2252 ansible_ssh_host=127.0.0.1
+
+
+[rosa-build]
+rosa-build-1 platform_type='rhel'
+file-store-2 platform_type='deb'
+
+[rosa-build:vars]
+
+action_mailer_host='abf.io'
+tmpfs_path='/dev/shm'
+root_path='/share'
+git_path='/mnt/gitstore'
+nginx_log='/srv/rosa_build/shared/log/nginx.access.log'
+do_not_reply_email='do-not-reply@rosalinux.ru'
+
+github_services_ip='127.0.0.1'
+github_services_port='4000'
+
+allowed_addresses_file_store='127.0.0.1'
+allowed_addresses_abf_downloads='127.0.0.1'
+
+abf_worker_publish_workers_count=4
+abf_worker_log_server_host='127.0.0.1'
+abf_worker_log_server_port='6379'
+
+# SecureRandom.hex(86)
+keys_key_pair_secret_key='keys_key_pair_secret_key'
+
+# SecureRandom.hex(44)
+keys_node_instruction_secret_key='keys_node_instruction_secret_key'
+
+# our public key
+keys_airbrake_api_key='569da9a0b8fcb786ee282548ab5f7d9c'
+
+# SecureRandom.hex(128)
+keys_secret_token='keys_secret_token'
+
+# SecureRandom.hex(64)
+keys_secret_key_base='keys_secret_key_base'
+
+keys_github_id='keys_github_id'
+keys_github_secret='keys_github_secret'
+
+keys_google_id='keys_google_id'
+keys_google_secret='keys_google_secret'
+
+keys_facebook_id='keys_facebook_id'
+keys_facebook_secret='keys_facebook_secret'
+
+# SecureRandom.hex(128)
+keys_devise_pepper='keys_devise_pepper'
+# SecureRandom.hex(32)
+keys_devise_secret='keys_devise_secret'
+
+file_store_url='http://file-store.rosalinux.ru'
+downloads_url='http://abf-downloads.rosalinux.ru/'
+
+feedback_email='abf-support@rosalab.ru'

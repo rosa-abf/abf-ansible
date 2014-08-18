@@ -1,0 +1,59 @@
+production:
+  action_mailer_host: '{{ action_mailer_host }}'
+  tmpfs_path: '{{ tmpfs_path }}'
+  root_path: '{{ root_path }}'
+  git_path: '{{ git_path }}'
+  nginx_log: '{{ nginx_log }}'
+  do-not-reply-email: '{{ do_not_reply_email }'
+  project_name: ABF
+  repo_project_name: ABF
+  github_services:
+    ip: '{{ github_services_ip }}'
+    port: '{{ github_services_port }}'
+  distr_types: ['mdv', 'rhel', 'arm']
+  allowed_addresses:
+    - '{{ allowed_addresses_abf_downloads }}'
+    - '{{ allowed_addresses_file_store }}'
+  abf_worker:
+    publish_workers_count: {{ abf_worker_publish_workers_count }}
+    log_server:
+      host: '{{ abf_worker_log_server_host }}'
+      port: '{{ abf_worker_log_server_port }}'
+  keys:
+    key_pair_secret_key: '{{ keys_key_pair_secret_key }}'
+    node_instruction_secret_key: '{{ keys_node_instruction_secret_key }}'
+    airbrake_api_key: '{{ keys_airbrake_api_key }}'
+    # logentries_key: 'logentries_key'
+    # logglier_key: 'logglier_key'
+    secret_token: '{{ keys_secret_token }}'
+    secret_key_base: '{{ keys_secret_key_base }}'
+    github:
+      id: '{{ keys_github_id }}'
+      secret: '{{ keys_github_secret }}'
+    google:
+      id: '{{ keys_google_id }}'
+      secret: '{{ keys_google_secret }}'
+    facebook:
+      id: '{{ keys_facebook_id }}'
+      secret: '{{ keys_facebook_secret }}'
+    devise:
+      pepper: '{{ keys_devise_pepper }}'
+      secret: '{{ keys_devise_secret }}'
+
+  anonymous_access: true
+  mailer_https_url: true
+  file_store_url: '{{ file_store_url }}'
+  wiki_formats:
+    markdown:  "Markdown"
+    textile:   "Textile"
+    org:       "Org-mode"
+  feedback:
+    email:
+      - '{{ feedback_email }}'
+    cc:
+      # - 'example@gmail.com'
+    subject_prefixes:
+      - 'abf-users'
+      - 'feeback_form'
+  shell_user: 'git'
+  downloads_url: '{{ downloads_url }}'

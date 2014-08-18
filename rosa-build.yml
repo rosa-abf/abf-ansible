@@ -1,0 +1,71 @@
+---
+# file: rosa-build.yml
+
+- hosts: rosa-build
+  user: root
+  roles:
+    - common
+
+- name: manage application user
+  hosts: rosa-build
+  user: root
+  roles:
+    - user
+  vars:
+    user: rosa
+
+- name: Install PostgreSQL
+  hosts: rosa-build
+  user: root
+  roles:
+    - PostgreSQL
+  vars:
+    # Basic settings
+    postgresql_version: 9.3
+    postgresql_encoding: 'UTF-8'
+    postgresql_locale: 'en_US.UTF-8'
+
+    postgresql_admin_user: postgres
+    postgresql_default_auth_method: trust
+
+    # postgresql_cluster_name: "main"
+    postgresql_cluster_name: "data"
+    postgresql_cluster_reset: false
+
+    # List of databases to be created (optional)
+    postgresql_databases:
+      - name: rosa_file_store
+        # flag to install the hstore extensions on this database (yes/no)
+        hstore: yes
+
+    # List of users to be created (optional)
+    postgresql_users:
+      - name: rosa
+        pass:
+        # denotes if the password is already encrypted.
+        encrypted: no
+
+    # List of user privileges to be applied (optional)
+    postgresql_user_privileges:
+      # user name
+      - name: rosa
+        # database
+        db: rosa_build
+        # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+        priv: ALL
+
+- name: setup rvm, ruby, gemset and etc., deploy
+  hosts: rosa-build
+  remote_user: rosa
+  roles:
+    - ruby
+    - rosa-build
+  vars:
+    ruby_version: 2.1.1
+    deploy_to: /srv/rosa_build
+    tmpfs_path: /dev/shm
+    root_path: /share
+    git_path:  /mnt/gitstore
+    user: rosa
+    repo: https://abf.io/abf/rosa-build.git
+    branch: master
