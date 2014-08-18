@@ -63,9 +63,6 @@
   vars:
     ruby_version: 2.1.1
     deploy_to: /srv/rosa_build
-    tmpfs_path: /dev/shm
-    root_path: /share
-    git_path:  /mnt/gitstore
     user: rosa
     repo: https://abf.io/abf/rosa-build.git
     branch: master

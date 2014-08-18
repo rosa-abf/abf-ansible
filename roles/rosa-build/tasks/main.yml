@@ -33,37 +33,6 @@
 - name: creates database.yml
   template: src=database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
 
-- name: get nginx version
-  command: nginx -v
-  register: nginx_version
-  always_run: yes
-  ignore_errors: yes
-  changed_when: false
-
 - include: nginx.yml
-  when: nginx_version.rc != 0
-
-- name: nginx | create nginx.conf
-  template: src=nginx.conf dest=/etc/nginx/nginx.conf
-  sudo: yes
-
-- name: nginx | create /etc/nginx/conf.d directory
-  file: path=/etc/nginx/conf.d state=directory
-  sudo: yes
-
-- name: nginx | creates file-store.conf
-  template: src=file-store.conf dest=/etc/nginx/conf.d/file-store.conf
-  sudo: yes
-
-- name: nginx | stop nginx
-  sudo: yes
-  command: nginx -s stop
-  ignore_errors: yes
-
-- name: nginx | start nginx
-  sudo: yes
-  command: nginx
-
 - include: iptables.yml
-- include: deploy.yml
 

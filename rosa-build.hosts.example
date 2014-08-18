@@ -10,6 +10,10 @@ file-store-2 platform_type='deb'
 
 [rosa-build:vars]
 
+nginx_server_name='abf.rosalinux.ru'
+nginx_abf_downloads_url='http://abf-downloads.rosalinux.ru'
+nginx_abf_host='abf.io'
+
 action_mailer_host='abf.io'
 tmpfs_path='/dev/shm'
 root_path='/share'
