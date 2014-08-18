@@ -1,0 +1,26 @@
+---
+# file: roles/abf-downloads/tasks/nginx.yml
+
+- name: add abf-worker-service repo
+  copy: >
+    src=rosa-server65/abf-worker-service.repo
+    dest=/etc/yum.repos.d/abf-worker-service.repo
+    owner=root group=root mode=0644
+  when: platform_name == "rosa-server65"
+
+- name: nginx | install useful soft
+  yum: pkg={{ item }} state=present
+  with_items:
+    - nginx
+
+- name: nginx | create nginx.conf
+  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+
+- name: nginx | create /etc/nginx/conf.d directory
+  file: path=/etc/nginx/conf.d state=directory
+
+- name: nginx | creates abf-downloads.conf
+  template: src=abf-downloads.conf dest=/etc/nginx/conf.d/abf-downloads.conf
+
+- name: nginx | restart nginx
+  action: service name=nginx state=restarted

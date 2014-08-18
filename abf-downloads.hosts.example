@@ -1,0 +1,14 @@
+# ROSA-Server-6.5.1-x86_64-netinst.iso
+abf-downloads-1 ansible_ssh_port=2241 ansible_ssh_host=127.0.0.1
+
+[abf-downloads]
+abf-downloads-1 platform_type='rhel' platform_name='rosa-server65'
+
+[abf-downloads:vars]
+abf_ip1                 = 195.19.76.241
+abf_domain1             = abf.rosalinux.ru
+abf_ip2                 = 195.19.76.241
+abf_domain2             = abf.io
+
+abf_url                 = 'https://abf.rosalinux.ru'
+server_name             = 'abf-downloads.rosalinux.ru,localhost'

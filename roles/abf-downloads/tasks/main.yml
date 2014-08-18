@@ -1,0 +1,10 @@
+---
+# file: roles/abf-downloads/tasks/main.yml
+
+- name: Create directories
+  file: path={{ item }} state=directory owner={{ user }} group={{ user }}
+  with_items:
+    - "{{ share_platforms }}"
+
+- include: nginx.yml
+- include: iptables.yml

@@ -1,0 +1,17 @@
+---
+# file: abf-downloads.yml
+
+- hosts: abf-downloads
+  user: root
+  roles:
+    - common
+
+- name: manage application user, configure abf-downloads
+  hosts: abf-downloads
+  user: root
+  roles:
+    - user
+    - abf-downloads
+  vars:
+    user: rosa
+    share_platforms: /share/platforms
