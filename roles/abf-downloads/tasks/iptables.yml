@@ -11,6 +11,8 @@
   with_items:
     - { protocol: tcp, port: 80 }
     # - { protocol: tcp, port: 443 }
+ # when: platform_name == "rosa-server65"
 
 - name: iptables | restart iptables
   action: service name=iptables state=restarted
+ # when: platform_name == "rosa-server65"
