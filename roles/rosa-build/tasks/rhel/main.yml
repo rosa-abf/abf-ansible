@@ -1,0 +1,22 @@
+---
+# file: roles/file-store/tasks/rhel/main.yml
+
+- name: install nesessary packages
+  yum: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - git-core
+    - libicu-devel
+    - gcc
+    - ruby-devel
+    - libxml2
+    - libxml2-devel
+    - libxslt
+    - libxslt-devel
+    - postgresql-devel
+    # - nginx
+    - postfix
+    - python-devel
+    - crontabs
+    - openssl
+    - sqlite-devel

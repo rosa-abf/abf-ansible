@@ -1,24 +1,27 @@
 production:
-  action_mailer_host: '{{ action_mailer_host }}'
-  tmpfs_path: '{{ tmpfs_path }}'
-  root_path: '{{ root_path }}'
-  git_path: '{{ git_path }}'
-  nginx_log: '{{ nginx_log }}'
-  do-not-reply-email: '{{ do_not_reply_email }'
+  action_mailer_host: '{{ application.action_mailer_host }}'
+  tmpfs_path: '{{ application.tmpfs_path }}'
+  root_path: '{{ application.root_path }}'
+  git_path: '{{ application.git_path }}'
+  nginx_log: '{{ application.nginx_log }}'
+  do-not-reply-email: '{{ application.do_not_reply_email }}'
   project_name: ABF
   repo_project_name: ABF
   github_services:
-    ip: '{{ github_services_ip }}'
-    port: '{{ github_services_port }}'
+    ip: '{{ application.github_services.ip }}'
+    port: '{{ application.github_services.port }}'
   distr_types: ['mdv', 'rhel', 'arm']
   allowed_addresses:
-    - '{{ allowed_addresses_abf_downloads }}'
-    - '{{ allowed_addresses_file_store }}'
+
+{% for address in application.allowed_addresses %}
+    - '{{ address }}'
+{% endfor %}
+
   abf_worker:
-    publish_workers_count: {{ abf_worker_publish_workers_count }}
+    publish_workers_count: {{ application.abf_worker.publish_workers_count }}
     log_server:
-      host: '{{ abf_worker_log_server_host }}'
-      port: '{{ abf_worker_log_server_port }}'
+      host: '{{ application.abf_worker.log_server.host }}'
+      port: '{{ application.abf_worker.log_server.port }}'
   keys:
     key_pair_secret_key: '{{ keys_key_pair_secret_key }}'
     node_instruction_secret_key: '{{ keys_node_instruction_secret_key }}'
@@ -42,18 +45,26 @@ production:
 
   anonymous_access: true
   mailer_https_url: true
-  file_store_url: '{{ file_store_url }}'
+  file_store_url: '{{ application.file_store_url }}'
   wiki_formats:
     markdown:  "Markdown"
     textile:   "Textile"
     org:       "Org-mode"
   feedback:
     email:
-      - '{{ feedback_email }}'
+
+{% for email in application.feedback.email %}
+      - '{{ email }}'
+{% endfor %}
+
     cc:
-      # - 'example@gmail.com'
+
+{% for email in application.feedback.cc %}
+      - '{{ email }}'
+{% endfor %}
+
     subject_prefixes:
       - 'abf-users'
       - 'feeback_form'
   shell_user: 'git'
-  downloads_url: '{{ downloads_url }}'
+  downloads_url: '{{ application.downloads_url }}'

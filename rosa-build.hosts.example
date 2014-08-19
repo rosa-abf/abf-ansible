@@ -6,30 +6,10 @@ rosa-build-2     ansible_ssh_port=2252 ansible_ssh_host=127.0.0.1
 
 [rosa-build]
 rosa-build-1 platform_type='rhel'
-file-store-2 platform_type='deb'
+# rosa-build-2 platform_type='deb'
 
 [rosa-build:vars]
-
-nginx_server_name='abf.rosalinux.ru'
-nginx_abf_downloads_url='http://abf-downloads.rosalinux.ru'
-nginx_abf_host='abf.io'
-
-action_mailer_host='abf.io'
-tmpfs_path='/dev/shm'
-root_path='/share'
-git_path='/mnt/gitstore'
-nginx_log='/srv/rosa_build/shared/log/nginx.access.log'
-do_not_reply_email='do-not-reply@rosalinux.ru'
-
-github_services_ip='127.0.0.1'
-github_services_port='4000'
-
-allowed_addresses_file_store='127.0.0.1'
-allowed_addresses_abf_downloads='127.0.0.1'
-
-abf_worker_publish_workers_count=4
-abf_worker_log_server_host='127.0.0.1'
-abf_worker_log_server_port='6379'
+new_relic_license_key='new_relic_license_key'
 
 # SecureRandom.hex(86)
 keys_key_pair_secret_key='keys_key_pair_secret_key'
@@ -59,8 +39,3 @@ keys_facebook_secret='keys_facebook_secret'
 keys_devise_pepper='keys_devise_pepper'
 # SecureRandom.hex(32)
 keys_devise_secret='keys_devise_secret'
-
-file_store_url='http://file-store.rosalinux.ru'
-downloads_url='http://abf-downloads.rosalinux.ru/'
-
-feedback_email='abf-support@rosalab.ru'

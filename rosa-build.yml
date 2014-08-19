@@ -34,9 +34,9 @@
 
     # List of databases to be created (optional)
     postgresql_databases:
-      - name: rosa_file_store
+      - name: rosa_build
         # flag to install the hstore extensions on this database (yes/no)
-        hstore: yes
+        hstore: no
 
     # List of users to be created (optional)
     postgresql_users:
@@ -66,3 +66,39 @@
     user: rosa
     repo: https://abf.io/abf/rosa-build.git
     branch: master
+
+    git:
+      name: Rosa
+      email: rosa@abf.io
+
+    nginx:
+      # use_ssl - true/false
+      use_ssl: false
+      ssl_certificate: /etc/ssl/abf.crt
+      ssl_certificate_key: /etc/ssl/abf.key
+
+    application:
+      action_mailer_host: 'abf.io'
+      tmpfs_path: '/dev/shm'
+      root_path: '/share'
+      git_path: '/mnt/gitstore'
+      nginx_log: '/srv/rosa_build/shared/log/nginx.access.log'
+      do_not_reply_email: 'do-not-reply@rosalinux.ru'
+      file_store_url: 'http://file-store.rosalinux.ru'
+      downloads_url: 'http://abf-downloads.rosalinux.ru/'
+      feedback:
+        email:
+          - 'abf-support@rosalab.ru'
+        cc:
+          - 'example@gmail.com'
+      github_services:
+        ip: '127.0.0.1'
+        port: 4000
+      allowed_addresses:
+        - 127.0.0.1
+      abf_worker:
+        publish_workers_count: 4
+        log_server:
+          host: '127.0.0.1'
+          port: '6379'
+

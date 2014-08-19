@@ -12,6 +12,8 @@
 - include: "rhel/main.yml"
   when: platform_type == 'rhel'
 
+- include: crond.yml
+
 - name: Create directories
   file: path={{ item }} state=directory owner={{ user }} group={{ user }}
   sudo: yes
@@ -24,6 +26,8 @@
     - "{{ deploy_to }}/shared/pids"
     - "{{ deploy_to }}/shared/assets"
     - "{{ deploy_to }}/shared/bundle"
+    - "{{ deploy_to }}/shared/downloads"
+    - "{{ deploy_to }}/shared/sitemaps"
     - "{{ deploy_to }}/scm"
 
 
@@ -33,6 +37,21 @@
 - name: creates database.yml
   template: src=database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
 
+- name: creates newrelic.yml
+  template: src=newrelic.yml dest={{ deploy_to }}/shared/config/newrelic.yml owner={{ user }}
+
 - include: nginx.yml
 - include: iptables.yml
+
+- name: get redis version
+  command: redis-server -v
+  register: redis_version
+  always_run: yes
+  ignore_errors: yes
+  changed_when: false
+
+- include: redis.yml
+  when: redis_version.rc != 0
+
+- include: deploy.yml
 

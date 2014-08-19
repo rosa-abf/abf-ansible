@@ -15,7 +15,7 @@ All command should be called from local PC
 ## rosa-build
 
     cp rosa-build.hosts.example rosa-build.hosts
-    # Update "rosa-build.hosts" file
+    # Update "rosa-build.hosts" and "rosa-build.yml" files
     ansible-playbook -i rosa-build.hosts rosa-build.yml
 
 ## abf-downloads
