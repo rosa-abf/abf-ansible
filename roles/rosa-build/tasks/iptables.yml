@@ -13,6 +13,13 @@
     - { protocol: tcp, port: 80 }
     - { protocol: tcp, port: 443 }
 
+- name: iptables | remove unnecessary rule
+  sudo: true
+  lineinfile: >
+    dest=/etc/sysconfig/iptables
+    regexp="^-A FORWARD -j REJECT --reject-with icmp-host-prohibited"
+    line="# -A FORWARD -j REJECT --reject-with icmp-host-prohibited"
+
 - name: iptables | restart iptables
   action: service name=iptables state=restarted
   sudo: true

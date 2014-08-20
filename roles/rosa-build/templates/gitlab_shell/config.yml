@@ -1,0 +1,14 @@
+# GitLab user. git by default
+user: git
+
+# Url to gitlab instance. Used for api calls
+# Use http instead of https when no ssl certificates
+{% if nginx.use_ssl == true %}
+gitlab_url: "https://127.0.0.1/"
+{% else %}
+gitlab_url: "http://127.0.0.1/"
+{% endif %}
+
+
+# Repositories path (APP_CONFIG[‘git_path’] + ‘/git_projects’)
+repos_path: "{{ application.git_path }}/git_projects"

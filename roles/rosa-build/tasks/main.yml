@@ -14,35 +14,6 @@
 
 - include: crond.yml
 
-- name: Create directories
-  file: path={{ item }} state=directory owner={{ user }} group={{ user }}
-  sudo: yes
-  with_items:
-    - "{{ deploy_to }}"
-    - "{{ deploy_to }}/releases"
-    - "{{ deploy_to }}/shared/config"
-    - "{{ deploy_to }}/shared/tmp"
-    - "{{ deploy_to }}/shared/log"
-    - "{{ deploy_to }}/shared/pids"
-    - "{{ deploy_to }}/shared/assets"
-    - "{{ deploy_to }}/shared/bundle"
-    - "{{ deploy_to }}/shared/downloads"
-    - "{{ deploy_to }}/shared/sitemaps"
-    - "{{ deploy_to }}/scm"
-
-
-- name: creates application.yml
-  template: src=application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
-
-- name: creates database.yml
-  template: src=database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
-
-- name: creates newrelic.yml
-  template: src=newrelic.yml dest={{ deploy_to }}/shared/config/newrelic.yml owner={{ user }}
-
-- include: nginx.yml
-- include: iptables.yml
-
 - name: get redis version
   command: redis-server -v
   register: redis_version
@@ -53,5 +24,9 @@
 - include: redis.yml
   when: redis_version.rc != 0
 
+- include: gitlab_shell.yml
 - include: deploy.yml
+- include: nginx.yml
+- include: iptables.yml
+- include: logs.yml
 

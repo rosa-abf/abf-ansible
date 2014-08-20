@@ -14,6 +14,7 @@
     regexp='^%{{ user }}'
     line='%{{ user }} ALL=(ALL) NOPASSWD: ALL'
   tags: config-sudoers
+  when: skip_config_sudoers is not defined or not skip_config_sudoers
 
 - name: disable 'Defaults    requiretty' in sudoers
   lineinfile: >
@@ -23,6 +24,7 @@
     regexp='^Defaults[\s]+requiretty'
     line='# Defaults requiretty'
   tags: config-sudoers
+  when: skip_config_sudoers is not defined or not skip_config_sudoers
 
 - name: add /usr/sbin to .bashrc
   lineinfile: >

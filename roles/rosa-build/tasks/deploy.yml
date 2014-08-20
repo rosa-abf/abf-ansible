@@ -1,6 +1,31 @@
 ---
 # file: roles/rosa-build/tasks/deploy.yml
 
+- name: deploy | create directories
+  file: path={{ item }} state=directory owner={{ user }} group={{ user }}
+  sudo: yes
+  with_items:
+    - "{{ deploy_to }}"
+    - "{{ deploy_to }}/releases"
+    - "{{ deploy_to }}/shared/config"
+    - "{{ deploy_to }}/shared/tmp"
+    - "{{ deploy_to }}/shared/log"
+    - "{{ deploy_to }}/shared/pids"
+    - "{{ deploy_to }}/shared/assets"
+    - "{{ deploy_to }}/shared/bundle"
+    - "{{ deploy_to }}/shared/downloads"
+    - "{{ deploy_to }}/shared/sitemaps"
+    - "{{ deploy_to }}/scm"
+
+- name: deploy | creates application.yml
+  template: src=deploy/application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
+
+- name: deploy | creates database.yml
+  template: src=deploy/database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
+
+- name: deploy | creates newrelic.yml
+  template: src=deploy/newrelic.yml dest={{ deploy_to }}/shared/config/newrelic.yml owner={{ user }}
+
 - name: deploy | clone repo
   git: >
     repo={{ repo }}
@@ -22,12 +47,12 @@
     chdir={{ deploy_to }}/scm
 
 - name: deploy | creates config/deploy.rb
-  template: src=deploy.rb dest={{ deploy_to }}/scm/config/deploy.rb owner={{ user }}
+  template: src=deploy/deploy.rb dest={{ deploy_to }}/scm/config/deploy.rb owner={{ user }}
 
 - name: deploy | creates config/application.yml
-  template: src=application.yml dest={{ deploy_to }}/scm/config/application.yml owner={{ user }}
+  template: src=deploy/application.yml dest={{ deploy_to }}/scm/config/application.yml owner={{ user }}
 
-- name: deploy | run deploy:update
+- name: deploy | run deploy
   command: >
     rvm {{ ruby_version }}@rosa_build_deploy do bundle exec cap deploy ENV=production
     chdir={{ deploy_to }}/scm

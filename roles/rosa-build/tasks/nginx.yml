@@ -9,7 +9,7 @@
 
 - name: nginx | create nginx.conf
   sudo: true
-  template: src=nginx.conf dest=/etc/nginx/nginx.conf
+  template: src=nginx/nginx.conf dest=/etc/nginx/nginx.conf
 
 - name: nginx | create /etc/nginx/conf.d directory
   sudo: true
@@ -17,12 +17,12 @@
 
 - name: nginx | creates rosa_build_http.conf
   sudo: true
-  template: src=rosa_build.https.conf dest=/etc/nginx/conf.d/rosa_build_https.conf
+  template: src=nginx/rosa_build.https.conf dest=/etc/nginx/conf.d/rosa_build_https.conf
   when: nginx.use_ssl
 
 - name: nginx | creates rosa_build_https.conf
   sudo: true
-  template: src=rosa_build.http.conf dest=/etc/nginx/conf.d/rosa_build_http.conf
+  template: src=nginx/rosa_build.http.conf dest=/etc/nginx/conf.d/rosa_build_http.conf
   when: not nginx.use_ssl
 
 - name: nginx | restart nginx

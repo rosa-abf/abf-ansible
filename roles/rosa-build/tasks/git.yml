@@ -10,8 +10,3 @@
 
 - name: git | core.quotepath
   command: git config --global core.quotepath false
-
-- name: create user git
-  user: state=present name=git createhome=yes shell=/bin/bash generate_ssh_key=yes
-
-# TODO
