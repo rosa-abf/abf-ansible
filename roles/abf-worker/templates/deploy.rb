@@ -25,7 +25,7 @@ set :scm, :git
 # set :repository,  "git@195.19.76.241:abf/abf-worker.git"
 # set :repository,  "git@abf.rosalinux.ru:abf/abf-worker-lxc.git"
 # set :repository,  "rosa@abf.rosalinux.ru:/mnt/gitstore/git_projects/abf/abf-worker-lxc.git"
-set :repository,  "{{ repo }}"
+set :repository,  "{{ repo_with_auth }}"
 # set :deploy_via,  :remote_cache
 set :deploy_via, :copy
 

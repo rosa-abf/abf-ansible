@@ -66,4 +66,5 @@
     upload_store: /mnt/store/file-store
     user: rosa
     repo: https://abf.io/abf/rosa-file-store.git
+    repo_with_auth: https://abf:abf@abf.io/abf/rosa-file-store.git
     branch: master
