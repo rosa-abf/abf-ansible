@@ -63,6 +63,12 @@
         # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
         priv: ALL
 
+- name: install postfix
+  hosts: rosa-build
+  user: root
+  roles:
+    - { role: geerlingguy.postfix }
+
 - name: setup rvm, ruby, gemset and etc. for git user
   hosts: rosa-build
   remote_user: git
