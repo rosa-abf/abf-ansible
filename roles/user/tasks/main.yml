@@ -1,6 +1,6 @@
 ---
 
-- name: create user rosa
+- name: create user {{ user }}
   user: state=present name={{ user }} createhome=yes shell=/bin/bash generate_ssh_key=yes
 
 - name: adds rosa own key to authorized_keys
@@ -36,4 +36,5 @@
   tags: config-bashrc
 
 - include: access.yml
+  when: skip_authorized_keys is not defined or not skip_authorized_keys
 

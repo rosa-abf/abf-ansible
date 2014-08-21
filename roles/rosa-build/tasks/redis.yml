@@ -1,7 +1,7 @@
 ---
 # file: roles/rosa-build/tasks/redis.yml
 
-- name: redis | ensure that no tmp dir for nginx
+- name: redis | ensure that no tmp dir for redis
   file: path=/home/{{ user }}/redis state=absent
   ignore_errors: yes
   sudo: yes

@@ -22,6 +22,7 @@
   vars:
     user: git
     skip_config_sudoers: true
+    skip_authorized_keys: true
 
 - name: Install PostgreSQL
   hosts: rosa-build
@@ -69,7 +70,7 @@
   roles:
     - ruby
   vars:
-    ruby_version: 1.9.3-p392
+    ruby_version: 2.1.1
 
 - name: setup rvm, ruby, gemset and etc., deploy
   hosts: rosa-build

@@ -1,6 +1,12 @@
 ---
 # file: roles/rosa-build/tasks/gitlab_shell.yml
 
+- name: appending the group 'git' to the {{ user }}'s groups
+  command: sudo usermod -a -G git rosa
+
+- name: appending the group '{{ user }}' to the git's groups
+  command: sudo usermod -a -G rosa git
+
 - name: gitlab_shell | clone repo
   remote_user: git
   git: >
