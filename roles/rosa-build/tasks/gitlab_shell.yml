@@ -20,3 +20,6 @@
 - name: gitlab_shell | creates config.yml
   remote_user: git
   template: src=gitlab_shell/config.yml dest=/home/git/gitlab-shell/config.yml
+
+- name: gitlab_shell | remove all authorized_keys
+  command: sudo truncate -s 0 /home/git/.ssh/authorized_keys
