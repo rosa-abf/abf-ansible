@@ -5,6 +5,8 @@
   user: root
   roles:
     - common
+  vars:
+    user: root
 
 - name: manage application user
   hosts: file-store
