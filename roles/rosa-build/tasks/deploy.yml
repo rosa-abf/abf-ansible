@@ -16,9 +16,9 @@
     - "{{ deploy_to }}/shared/downloads"
     - "{{ deploy_to }}/shared/sitemaps"
     - "{{ deploy_to }}/scm"
-    - "{{ root_path }}"
-    - "{{ git_path }}"
-    - "{{ tmpfs_path }}"
+    - "{{ application.root_path }}"
+    - "{{ application.git_path }}"
+    - "{{ application.tmpfs_path }}"
 
 - name: deploy | creates application.yml
   template: src=deploy/application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
