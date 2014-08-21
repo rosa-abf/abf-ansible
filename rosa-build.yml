@@ -22,7 +22,6 @@
   vars:
     user: git
     skip_config_sudoers: true
-    skip_authorized_keys: true
 
 - name: Install PostgreSQL
   hosts: rosa-build
@@ -66,7 +65,7 @@
 
 - name: setup rvm, ruby, gemset and etc. for git user
   hosts: rosa-build
-  remote_user: rosa
+  remote_user: git
   roles:
     - ruby
   vars:
@@ -92,7 +91,7 @@
 
     gitlab_shell:
       repo: https://abf.io/abf/gitlab-shell.git
-      branch: master
+      branch: ruby-2.1.1
 
     nginx:
       # use_ssl - true/false

@@ -8,7 +8,7 @@
   command: sudo usermod -a -G rosa git
 
 - name: gitlab_shell | clone repo
-  remote_user: root
+  remote_user: git
   git: >
     repo={{ gitlab_shell.repo }}
     version={{ gitlab_shell.branch }}
@@ -18,5 +18,5 @@
     GIT_SSL_NO_VERIFY: true
 
 - name: gitlab_shell | creates config.yml
-  remote_user: root
+  remote_user: git
   template: src=gitlab_shell/config.yml dest=/home/git/gitlab-shell/config.yml
