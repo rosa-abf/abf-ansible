@@ -59,7 +59,7 @@
   command: >
     rvm {{ ruby_version }}@rosa_build_deploy do bundle exec cap deploy ENV=production
     chdir={{ deploy_to }}/scm
-  async: 600
+  async: 800
   poll: 0
 
 # - name: deploy | check unicorn
