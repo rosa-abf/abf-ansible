@@ -26,17 +26,17 @@ set :scm, :git
 set :deploy_via, :copy
 set :copy_dir, "/home/{{ user }}/tmp"
 # set :repository, "git@github.com:warpc/rosa-file-store.git"
-set :repository, "{{ repo }}"
+set :repository, "{{ repo_with_auth }}"
 set :branch, "{{ branch }}"
 
 namespace :deploy do
   set :unicorn_binary, "bundle exec unicorn"
   set(:unicorn_pid) { "#{fetch :shared_path}/pids/unicorn.pid" }
 
-  task :start, :roles => :app, :except => { :no_release => true } do 
+  task :start, :roles => :app, :except => { :no_release => true } do
     run "cd #{fetch :current_path} && #{try_sudo} #{unicorn_binary} -l /tmp/#{fetch :application}_unicorn.sock -E production -c config/unicorn.rb -D" # -p #{unicorn_port}
   end
-  task :stop, :roles => :app, :except => { :no_release => true } do 
+  task :stop, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} kill `cat #{unicorn_pid}`" rescue warn 'deploy:stop FAILED'
   end
   task :graceful_stop, :roles => :app, :except => { :no_release => true } do

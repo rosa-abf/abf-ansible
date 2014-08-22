@@ -3,7 +3,7 @@
 
 - name: deploy | clone repo
   git: >
-    repo={{ repo }}
+    repo={{ repo_with_auth }}
     version={{ branch }}
     dest={{ deploy_to }}/scm
     update=true force=true

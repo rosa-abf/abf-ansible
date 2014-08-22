@@ -3,6 +3,11 @@
 - name: install rvm
   shell: \curl -L https://get.rvm.io | bash -s stable
 
+- name: CentOS/RHEL 6, 64 Bit x86_64
+  command: sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+  ignore_errors: yes
+  when: platform_name is defined and platform_name == "centos6.5"
+
 - name: install rvm requirements
   shell: rvm requirements
 

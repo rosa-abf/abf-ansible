@@ -4,12 +4,14 @@ file-store-1     ansible_ssh_port=2231 ansible_ssh_host=127.0.0.1
 file-store-2     ansible_ssh_port=2232 ansible_ssh_host=127.0.0.1
 # ubuntu-14.04.1-server-amd64.iso
 file-store-3     ansible_ssh_port=2233 ansible_ssh_host=127.0.0.1
-
+# centos 6.5
+file-store-4     ansible_ssh_port=2225 ansible_ssh_host=127.0.0.1
 
 [file-store]
 file-store-1 platform_type='rhel'
-# file-store-2 platform_type='mdv' 
+# file-store-2 platform_type='mdv'
 # file-store-3 platform_type='deb'
+file-store-4 platform_type='rhel' platform_name='centos6.5'
 
 [file-store:vars]
 file_store_ip           = 195.19.76.233

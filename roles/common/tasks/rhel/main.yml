@@ -8,3 +8,15 @@
     - patch
     - tar
     - libselinux-python # need for lineinfile module
+    - wget
+
+- name: Check git version
+  shell: git --version | grep -o "[0-9]\.[0-9]\.[0-9]"
+  register: git_v
+
+- include: git.yml
+  when: git_v.stdout | version_compare('1.8', '<=')
+
+- name: Check git version
+  shell: git --version | grep -o "[0-9]\.[0-9]\.[0-9]"
+  register: git_v
