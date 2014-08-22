@@ -1,4 +1,40 @@
 ---
 
-# TODO
-# - name: prepare install rvm
+- name: mdv | install requirements
+  urpmi: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - lib64yaml-devel
+    - autoconf
+    - gcc-c++
+    - glibc-devel
+    - patch
+    - readline
+    - readline-devel
+    - zlib
+    - zlib-devel
+    - openssl-devel
+    - make
+    - bzip2
+    - automake
+    - libtool
+    - bison
+
+- name: mdv | add ~/.rvm/scripts/rvm to .bashrc
+  lineinfile: >
+    dest=/home/{{ user }}/.bashrc
+    backup=yes
+    state=present
+    insertbefore='BOF'
+    line='[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*'
+  tags: config-bashrc
+
+- name: enable 'PermitUserEnvironment yes' in sudoers
+  sudo: yes
+  lineinfile: >
+    dest=/etc/ssh/sshd_config
+    backup=yes
+    state=present
+    regexp='^#[\s]?PermitUserEnvironment'
+    line='PermitUserEnvironment yes'
+  tags: config-sudoers

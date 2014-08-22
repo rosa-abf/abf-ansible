@@ -19,7 +19,7 @@
 - name: make the bridge persistent on reboot
   sudo: true
   copy: >
-    src=rosa-server65/ifcfg-lxcbr0
+    src=mdv/ifcfg-lxcbr0
     dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
     owner={{ user }}
 
