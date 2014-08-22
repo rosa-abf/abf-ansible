@@ -6,12 +6,12 @@
     src=rosa-server65/abf-worker-service.repo
     dest=/etc/yum.repos.d/abf-worker-service.repo
     owner=root group=root mode=0644
-  when: platform_name == "rosa-server65"
+  when: platform_name is defined and platform_name == "rosa-server65"
 
 - name: add the centOS 6.5 nginx yum repository
   command: sudo rpm -Uvh http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
   ignore_errors: true
-  when: platform_name == "centos6.5"
+  when: platform_name is defined and platform_name == "centos6.5"
 
 - name: disable selinux on centos
   lineinfile: >
@@ -19,7 +19,7 @@
     regexp="^SELINUX="
     line="SELINUX=disabled"
   register: need_restart_server
-  when: platform_name == "centos6.5"
+  when: platform_name is defined and platform_name == "centos6.5"
 
 - debug: var=need_restart_server.changed
 
@@ -29,7 +29,7 @@
   async: 0
   poll: 0
   ignore_errors: true
-  when: platform_name == "centos6.5" and need_restart_server.changed
+  when: platform_name is defined and platform_name == "centos6.5" and need_restart_server.changed
 
 - debug: var=ansible_ssh_host
 - debug: var=ansible_ssh_port
@@ -41,7 +41,7 @@
     search_regex=OpenSSH
     state=started
     delay=30
-  when: platform_name == "centos6.5" and need_restart_server.changed
+  when: platform_name is defined and platform_name == "centos6.5" and need_restart_server.changed
 
 - name: nginx | install useful soft
   yum: pkg={{ item }} state=present

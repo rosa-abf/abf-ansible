@@ -1,0 +1,42 @@
+---
+# See: https://gist.github.com/matthewriley/8319432
+- name: git | install soft for install the git
+  yum: pkg={{ item }} state=present
+  with_items:
+    - gcc
+    - make
+    - zlib-devel
+    - openssl-devel
+    - cpio
+    - expat-devel
+    - gettext-devel
+    - curl-devel
+    - perl-ExtUtils-CBuilder
+    - perl-ExtUtils-MakeMaker
+
+- name: git | create directory
+  file: path=/{{ user }}/git state=directory
+
+- name: nginx | ensure that no tmp dir for git
+  file: path=/{{ user }}/git/git-2.1.0 state=absent
+  ignore_errors: yes
+
+- name: git | download source
+  command: >
+    wget https://github.com/git/git/archive/v2.1.0.tar.gz -O v2.1.0.tar.gz
+    chdir=/{{ user }}/git
+
+- name: git | extract archive
+  command: >
+    tar -xf v2.1.0.tar.gz
+    chdir=/{{ user }}/git
+
+- name: git | make
+  command: >
+    make prefix=/usr all
+    chdir=/{{ user }}/git/git-2.1.0
+
+- name: git | install
+  command: >
+    make prefix=/usr install
+    chdir=/{{ user }}/git/git-2.1.0
