@@ -12,7 +12,8 @@
      - libvirt
 
 - name: add the EPEL repo
-  command: sudo rpm -ivh http://mirror.1000mbps.com/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
+  # command: sudo rpm -ivh http://mirror.1000mbps.com/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
+  command: sudo rpm -ivh http://mirror.yandex.ru/epel/6Server/x86_64/epel-release-6-8.noarch.rpm
   ignore_errors: yes
 
 - name: install the latest version of lxc
