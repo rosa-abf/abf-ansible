@@ -1,0 +1,25 @@
+---
+# file: roles/rosa-build/tasks/gitlab_shell.yml
+
+- name: appending the group 'git' to the {{ user }}'s groups
+  command: sudo usermod -a -G git rosa
+
+- name: appending the group '{{ user }}' to the git's groups
+  command: sudo usermod -a -G rosa git
+
+- name: gitlab_shell | clone repo
+  remote_user: git
+  git: >
+    repo={{ gitlab_shell.repo }}
+    version={{ gitlab_shell.branch }}
+    dest=/home/git/gitlab-shell
+    update=true force=true
+  environment:
+    GIT_SSL_NO_VERIFY: true
+
+- name: gitlab_shell | creates config.yml
+  remote_user: git
+  template: src=gitlab_shell/config.yml dest=/home/git/gitlab-shell/config.yml
+
+- name: gitlab_shell | remove all authorized_keys
+  command: sudo truncate -s 0 /home/git/.ssh/authorized_keys

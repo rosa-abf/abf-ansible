@@ -1,0 +1,12 @@
+---
+# file: roles/rosa-build/tasks/git.yml
+
+
+- name: git | set user.name
+  command: git config --global user.name {{ git.name }}
+
+- name: git | set user.email
+  command: git config --global user.email {{ git.email }}
+
+- name: git | core.quotepath
+  command: git config --global core.quotepath false

@@ -12,6 +12,12 @@ All command should be called from local PC
     git clone git@abf.io:abf/abf-ansible.git
     cd abf-ansible
 
+## rosa-build
+
+    cp rosa-build.hosts.example rosa-build.hosts
+    # Update "rosa-build.hosts" and "rosa-build.yml" files
+    ansible-playbook -i rosa-build.hosts rosa-build.yml
+
 ## abf-downloads
 
     cp abf-downloads.hosts.example abf-downloads.hosts

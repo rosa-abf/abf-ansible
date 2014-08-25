@@ -1,0 +1,10 @@
+---
+# file: roles/rosa-build/tasks/logs.yml
+
+- name: logs | create /etc/logrotate.d/redis
+  sudo: true
+  template: src=logs/redis dest=/etc/logrotate.d/redis
+
+- name: logs | create /etc/logrotate.d/rosa_build
+  sudo: true
+  template: src=logs/rosa_build dest=/etc/logrotate.d/rosa_build

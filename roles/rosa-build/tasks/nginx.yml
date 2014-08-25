@@ -1,0 +1,30 @@
+---
+# file: roles/rosa-build/tasks/nginx.yml
+
+- name: nginx | install useful soft
+  sudo: true
+  yum: pkg={{ item }} state=present
+  with_items:
+    - nginx
+
+- name: nginx | create nginx.conf
+  sudo: true
+  template: src=nginx/nginx.conf dest=/etc/nginx/nginx.conf
+
+- name: nginx | create /etc/nginx/conf.d directory
+  sudo: true
+  file: path=/etc/nginx/conf.d state=directory
+
+- name: nginx | creates rosa_build_http.conf
+  sudo: true
+  template: src=nginx/rosa_build.https.conf dest=/etc/nginx/conf.d/rosa_build_https.conf
+  when: nginx.use_ssl
+
+- name: nginx | creates rosa_build_https.conf
+  sudo: true
+  template: src=nginx/rosa_build.http.conf dest=/etc/nginx/conf.d/rosa_build_http.conf
+  when: not nginx.use_ssl
+
+- name: nginx | restart nginx
+  sudo: true
+  action: service name=nginx state=restarted

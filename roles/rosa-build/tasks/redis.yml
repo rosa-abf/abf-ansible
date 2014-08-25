@@ -1,0 +1,26 @@
+---
+# file: roles/rosa-build/tasks/redis.yml
+
+- name: redis | ensure that no tmp dir for redis
+  file: path=/home/{{ user }}/redis state=absent
+  ignore_errors: yes
+  sudo: yes
+
+- name: redis | create directory
+  file: path=/home/{{ user }}/redis state=directory
+
+- name: redis | download script
+  command: >
+    wget https://abf.rosalinux.ru/abf/abf-configs/raw/master/rhel/redis_install.sh
+    chdir=/home/{{ user }}/redis
+
+- name: redis | chmod +x for script
+  command: >
+    chmod +x redis_install.sh
+    chdir=/home/{{ user }}/redis
+
+- name: redis | install redis
+  sudo: true
+  command: >
+    ./redis_install.sh
+    chdir=/home/{{ user }}/redis
