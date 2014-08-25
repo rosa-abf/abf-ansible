@@ -1,0 +1,32 @@
+---
+# file: roles/rosa-build/tasks/main.yml
+
+# TODO
+# - include: "deb/main.yml"
+#   when: platform_type == 'deb'
+
+# TODO
+# - include: "mdv/main.yml"
+#   when: platform_type == 'mdv'
+
+- include: "rhel/main.yml"
+  when: platform_type == 'rhel'
+
+- include: crond.yml
+
+- name: get redis version
+  command: redis-server -v
+  register: redis_version
+  always_run: yes
+  ignore_errors: yes
+  changed_when: false
+
+- include: redis.yml
+  when: redis_version.rc != 0
+
+- include: gitlab_shell.yml
+- include: deploy.yml
+- include: nginx.yml
+- include: iptables.yml
+- include: logs.yml
+

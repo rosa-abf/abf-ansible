@@ -1,0 +1,73 @@
+---
+# file: roles/rosa-build/tasks/deploy.yml
+
+- name: deploy | create directories
+  file: path={{ item }} state=directory owner={{ user }} group={{ user }}
+  sudo: yes
+  with_items:
+    - "{{ deploy_to }}"
+    - "{{ deploy_to }}/releases"
+    - "{{ deploy_to }}/shared/config"
+    - "{{ deploy_to }}/shared/tmp"
+    - "{{ deploy_to }}/shared/log"
+    - "{{ deploy_to }}/shared/pids"
+    - "{{ deploy_to }}/shared/assets"
+    - "{{ deploy_to }}/shared/bundle"
+    - "{{ deploy_to }}/shared/downloads"
+    - "{{ deploy_to }}/shared/sitemaps"
+    - "{{ deploy_to }}/scm"
+    - "{{ application.root_path }}"
+    - "{{ application.git_path }}"
+    - "{{ application.tmpfs_path }}"
+
+- name: deploy | creates application.yml
+  template: src=deploy/application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
+
+- name: deploy | creates database.yml
+  template: src=deploy/database.yml dest={{ deploy_to }}/shared/config/database.yml owner={{ user }}
+
+- name: deploy | creates newrelic.yml
+  template: src=deploy/newrelic.yml dest={{ deploy_to }}/shared/config/newrelic.yml owner={{ user }}
+
+- name: deploy | clone repo
+  git: >
+    repo={{ repo }}
+    version={{ branch }}
+    dest={{ deploy_to }}/scm
+    update=true force=true
+  environment:
+    GIT_SSL_NO_VERIFY: true
+
+- name: deploy | set default rvm gemset
+  shell: rvm ruby-{{ ruby_version }} do rvm --default use {{ ruby_version }}@rosa_build --create
+
+- name: deploy | creates rvm gemset for deploy
+  shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@rosa_build_deploy --create
+
+- name: deploy | ensure rosa_build bundle is installed
+  command: >
+    rvm {{ ruby_version }}@rosa_build_deploy do bundle install --without test
+    chdir={{ deploy_to }}/scm
+
+- name: deploy | creates config/deploy.rb
+  template: src=deploy/deploy.rb dest={{ deploy_to }}/scm/config/deploy.rb owner={{ user }}
+
+- name: deploy | creates config/application.yml
+  template: src=deploy/application.yml dest={{ deploy_to }}/scm/config/application.yml owner={{ user }}
+
+- name: deploy | run deploy
+  command: >
+    rvm {{ ruby_version }}@rosa_build_deploy do bundle exec cap deploy ENV=production
+    chdir={{ deploy_to }}/scm
+  async: 800
+  poll: 0
+
+# - name: deploy | check unicorn
+#   shell: ps aux | grep unicorn | grep -v grep | wc -l
+#   register: unicorn_workers
+
+# - name: deploy | run deploy:start
+#   command: >
+#     rvm {{ ruby_version }}@rosa-file-store-deploy do bundle exec cap deploy:start ENV=production
+#     chdir={{ deploy_to }}/scm
+#   when: unicorn_workers.stdout == '0'

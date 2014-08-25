@@ -1,0 +1,10 @@
+---
+# file: roles/rosa-build/tasks/crond.yml
+
+- name: crond | autostart service
+  sudo: yes
+  command: chkconfig crond on
+
+- name: crond | start service
+  sudo: true
+  action: service name=crond state=started
