@@ -1,7 +1,11 @@
 ---
 
 - name: default | install rvm
-  shell: \curl -L https://get.rvm.io | bash -s stable
+  # shell: \curl -L https://get.rvm.io | bash -s stable
+  # https://abf.io/abf/rvm/archive/rvm-rosa2014.1.tar.gz
+  # https://abf.io/abf/rvm/archive/rosa2014.1.tar.gz
+  shell: \curl -L https://get.rvm.io | bash -s -- --source abf.io/abf/rvm --branch rvm-rosa2014.1
+  # shell: \curl https://abf.io/abf/rvm/raw/rosa2014.1/binscripts/rvm-installer | bash -s stable
 
 - name: default | CentOS/RHEL 6, 64 Bit x86_64
   command: sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
@@ -10,7 +14,6 @@
 
 - name: default | install rvm requirements
   shell: rvm requirements
-  when: platform_type != 'mdv'
 
 - name: default | install ruby
   shell: rvm install {{ ruby_version }}

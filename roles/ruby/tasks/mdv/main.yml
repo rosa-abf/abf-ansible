@@ -1,24 +1,27 @@
 ---
 
-- name: mdv | install requirements
-  urpmi: pkg={{ item }} state=present
-  sudo: yes
-  with_items:
-    - lib64yaml-devel
-    - autoconf
-    - gcc-c++
-    - glibc-devel
-    - patch
-    - readline
-    - readline-devel
-    - zlib
-    - zlib-devel
-    - openssl-devel
-    - make
-    - bzip2
-    - automake
-    - libtool
-    - bison
+# - name: mdv | install requirements
+#   urpmi: pkg={{ item }} state=present
+#   sudo: yes
+#   with_items:
+#     - lib64yaml-devel
+#     - autoconf
+#     - gcc-c++
+#     - glibc-devel
+#     - patch
+#     - readline
+#     - readline-devel
+#     - zlib
+#     - zlib-devel
+#     - openssl-devel
+#     - make
+#     - bzip2
+#     - automake
+#     - libtool
+#     - bison
+
+- name: mdv | creates ~/.ssh/environment
+  template: src=../../templates/mdv/environment dest=/home/{{ user }}/.ssh/environment owner={{ user }}
 
 - name: mdv | add ~/.rvm/scripts/rvm to .bashrc
   lineinfile: >
@@ -38,3 +41,17 @@
     regexp='^#[\s]?PermitUserEnvironment'
     line='PermitUserEnvironment yes'
   tags: config-sudoers
+
+- name: mdv | disable 'UsePrivilegeSeparation sandbox' in sudoers
+  sudo: yes
+  lineinfile: >
+    dest=/etc/ssh/sshd_config
+    backup=yes
+    state=present
+    regexp='^UsePrivilegeSeparation'
+    line='# UsePrivilegeSeparation sandbox    # Default for new installations.'
+  tags: config-sudoers
+
+- name: mdv | restart sshd
+  sudo: yes
+  action: service name=sshd state=restarted
