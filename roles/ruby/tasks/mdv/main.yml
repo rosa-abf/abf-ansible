@@ -1,24 +1,10 @@
 ---
 
-# - name: mdv | install requirements
-#   urpmi: pkg={{ item }} state=present
-#   sudo: yes
-#   with_items:
-#     - lib64yaml-devel
-#     - autoconf
-#     - gcc-c++
-#     - glibc-devel
-#     - patch
-#     - readline
-#     - readline-devel
-#     - zlib
-#     - zlib-devel
-#     - openssl-devel
-#     - make
-#     - bzip2
-#     - automake
-#     - libtool
-#     - bison
+- name: mdv | install requirements
+  urpmi: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - curl
 
 - name: mdv | creates ~/.ssh/environment
   template: src=../../templates/mdv/environment dest=/home/{{ user }}/.ssh/environment owner={{ user }}
