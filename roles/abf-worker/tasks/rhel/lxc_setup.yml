@@ -1,4 +1,4 @@
-- name: enable IPv4 forwarding
+- name: rhel | lxc_setup | enable IPv4 forwarding
   lineinfile: >
     dest=/etc/hosts
     regexp='^net.ipv4.ip_forward = 0$'
@@ -6,10 +6,10 @@
   sudo: yes
   register: restart_sysctl
 
-- name: restart sysctl
+- name: rhel | lxc_setup | restart sysctl
   command: sudo sysctl -p
   when: restart_sysctl|success
 
-- name: start/enable libvirtd service
+- name: rhel | lxc_setup | start/enable libvirtd service
   service: name=libvirtd state=started enabled=yes
   sudo: true

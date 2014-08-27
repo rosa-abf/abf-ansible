@@ -1,6 +1,6 @@
 ---
 
-- name: install the latest version of lxc, ...
+- name: mdv | install the latest version of lxc, ...
   urpmi: pkg={{ item }} state=present
   sudo: yes
   with_items:

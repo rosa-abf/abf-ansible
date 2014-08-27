@@ -1,32 +1,36 @@
-- name: start/enable cgconfig service
+- name: mdv | lxc_setup | start/enable cgconfig service
   service: name=cgconfig state=started enabled=yes
   sudo: true
 
-- name: start/enable cgred service
+- name: mdv | lxc_setup | start/enable cgred service
   service: name=cgred state=started enabled=yes
   sudo: true
 
-- name: autostart cgconfig service
-  command: sudo chkconfig --level 345 cgconfig on
+- name: mdv | lxc_setup | autostart cgconfig service
+  command: chkconfig --level 345 cgconfig on
+  sudo: true
 
-- name: autostart cgred service
-  command: sudo chkconfig --level 345 cgred on
+- name: mdv | lxc_setup | autostart cgred service
+  command: chkconfig --level 345 cgred on
+  sudo: true
 
-- name: create lxcbr0 interface
-  command: sudo brctl addbr lxcbr0
+- name: mdv | lxc_setup | create lxcbr0 interface
+  command: brctl addbr lxcbr0
+  sudo: true
   ignore_errors: yes
 
-- name: make the bridge persistent on reboot
+- name: mdv | lxc_setup | make the bridge persistent on reboot
   sudo: true
   copy: >
     src=mdv/ifcfg-lxcbr0
     dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
     owner={{ user }}
 
-- name: ifup lxcbr0
-  command: sudo ifup lxcbr0
+- name: mdv | lxc_setup | ifup lxcbr0
+  command: ifup lxcbr0
+  sudo: true
 
-- name: enable IPv4 forwarding
+- name: mdv | lxc_setup | enable IPv4 forwarding
   lineinfile: >
     dest=/etc/hosts
     regexp='^net.ipv4.ip_forward = 0$'
@@ -34,6 +38,7 @@
   sudo: yes
   register: restart_sysctl
 
-- name: restart sysctl
-  command: sudo sysctl -p
+- name: mdv | lxc_setup | restart sysctl
+  command: sysctl -p
+  sudo: true
   when: restart_sysctl|success
