@@ -1,5 +1,23 @@
 ---
 
+- name: mdv | add contrib_release
+  shell: urpmi.addmedia contrib_release "http://abf-downloads.rosalinux.ru/openmandriva2014.0/repository/x86_64/contrib/release/"
+  sudo: yes
+  when: platform_name is defined and platform_name == "openmandriva2014.0"
+  ignore_errors: yes
+
+- name: mdv | add contrib_updates
+  shell: urpmi.addmedia contrib_updates "http://abf-downloads.rosalinux.ru/openmandriva2014.0/repository/x86_64/contrib/updates/"
+  sudo: yes
+  when: platform_name is defined and platform_name == "openmandriva2014.0"
+  ignore_errors: yes
+
+- name: mdv | urpmi.update -a
+  shell: urpmi.update -a
+  sudo: yes
+  ignore_errors: yes
+  when: platform_name is defined and platform_name == "openmandriva2014.0"
+
 - name: mdv | install the latest version of lxc, ...
   urpmi: pkg={{ item }} state=present
   sudo: yes
