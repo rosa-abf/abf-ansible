@@ -7,10 +7,5 @@ abf-downloads-1 platform_type='rhel' platform_name='centos6.5'
 abf-downloads-2 platform_type='rhel' platform_name='rosa-server65'
 
 [abf-downloads:vars]
-abf_ip1                 = 195.19.76.241
-abf_domain1             = abf.rosalinux.ru
-abf_ip2                 = 195.19.76.241
-abf_domain2             = abf.io
-
 abf_url                 = 'https://abf.rosalinux.ru'
 server_name             = 'abf-downloads.rosalinux.ru,localhost'

@@ -15,4 +15,4 @@
   register: git_v
 
 - include: git.yml
-  when: git_v.stdout | version_compare('1.8', '<=')
+  when: git_v is defined and git_v.stdout | version_compare('1.8', '<=')
