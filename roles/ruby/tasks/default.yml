@@ -2,6 +2,7 @@
 
 - name: default | check rvm
   shell: rvm list
+  ignore_errors: true
   register: check_rvm
 
 - name: default | install rvm

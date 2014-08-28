@@ -1,7 +1,12 @@
 ---
 
-- name: mdv | add the MDV repo
+- name: mdv | add the MDV main_release repo
   command: urpmi.addmedia main_release http://abf-downloads.rosalinux.ru/rosa2014.1/repository/x86_64/main/release/
+  when: platform_name == "rosa2014.1"
+  ignore_errors: true
+
+- name: mdv | add the MDV main_updates repo
+  command: urpmi.addmedia main_updates http://abf-downloads.rosalinux.ru/rosa2014.1/repository/x86_64/main/updates/
   when: platform_name == "rosa2014.1"
   ignore_errors: true
 

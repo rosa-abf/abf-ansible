@@ -37,7 +37,9 @@
     regexp='^UsePrivilegeSeparation'
     line='# UsePrivilegeSeparation sandbox    # Default for new installations.'
   tags: config-sudoers
+  register: config_sudoers
 
 - name: mdv | restart sshd
   sudo: yes
   action: service name=sshd state=restarted
+  when: config_sudoers.changed

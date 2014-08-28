@@ -28,5 +28,7 @@
     - bsdtar
     - procmail
     - libcgroup
+    - libvirt-utils
+    # - lib64virt-lxc0
 
 - include: lxc_setup.yml
