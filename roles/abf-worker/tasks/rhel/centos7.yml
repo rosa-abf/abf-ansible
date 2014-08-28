@@ -1,0 +1,35 @@
+- name: install some usefull soft
+  yum: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+     - wget
+     - libcgroup
+     - procmail
+     - bridge-utils
+     - libvirt
+
+- name: install libarchive
+  yum: pkg=libarchive state=present
+  sudo: yes
+
+- name: add the EPEL repo
+  command: sudo rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+  ignore_errors: yes
+
+- name: install the latest version of lxc
+  command: sudo yum -y install --enablerepo=epel-testing lxc lxc-libs lxc-templates debootstrap
+
+- name: add abf-worker-service repo
+  copy: >
+    src=roles/abf-worker/files/rosa-server65/abf-worker-service.repo
+    dest=/etc/yum.repos.d/abf-worker-service.repo
+    owner=root group=root mode=0644
+  sudo: yes
+#  when: platform_name == "rosa-server65"
+
+- name: install bsdtar, redir
+  yum: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+     - bsdtar
+     - redir

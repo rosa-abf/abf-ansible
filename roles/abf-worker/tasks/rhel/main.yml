@@ -1,15 +1,7 @@
 ---
 
-- name: rhel | install some usefull soft
-  yum: pkg={{ item }} state=present
-  sudo: yes
-  with_items:
-     - wget
-     - libcgroup
-     - procmail
-     - libarchive
-     - bridge-utils
-     - libvirt
+- include: centos7.yml
+  when: platform_name == "centos"
 
 - name: rhel | add the EPEL repo
   # command: sudo rpm -ivh http://mirror.1000mbps.com/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
@@ -33,5 +25,8 @@
   with_items:
      - bsdtar
      - redir
+
+- include: rels.yml
+  when: platform_name == "rosa-server65"
 
 - include: lxc_setup.yml

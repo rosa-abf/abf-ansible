@@ -4,12 +4,40 @@
     regexp='^net.ipv4.ip_forward = 0$'
     line='net.ipv4.ip_forward = 1'
   sudo: yes
-  register: restart_sysctl
+  when: platform_name == "centos"
+
+- name: enable IPv4 forwarding
+  lineinfile: >
+    dest=/etc/sysctl.conf
+    regexp='^net.ipv4.ip_forward = 0$'
+    line='net.ipv4.ip_forward = 1'
+  sudo: yes
+  when: platform_name == "rosa-server65"
 
 - name: rhel | lxc_setup | restart sysctl
-  command: sudo sysctl -p
-  when: restart_sysctl|success
+  command: sudo sysctl -e -p # ignore errors about unknown keys
 
 - name: rhel | lxc_setup | start/enable libvirtd service
   service: name=libvirtd state=started enabled=yes
   sudo: true
+
+- name: make default network start when host boots
+  command: sudo virsh net-autostart default
+
+- name: Creates cgroup directory
+  sudo: yes
+  file: path=/cgroup state=directory owner=root group=root
+  when: platform_name == "rosa-server65"
+
+- name: fstab cgroups
+  lineinfile: >
+    dest=/etc/fstab
+    regexp='^cgroup'
+    line='cgroup                  /cgroup                 cgroup  defaults        0 0'
+  sudo: yes
+  when: platform_name == "rosa-server65"
+
+- name: mount cgroup
+  #command: sudo mount -t cgroup cgroup /cgroup
+  command: sudo mount -a
+  when: platform_name == "rosa-server65"

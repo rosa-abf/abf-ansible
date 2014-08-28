@@ -103,3 +103,7 @@
   sudo: yes
   command: ln -s /usr/local/lib/libpcre.so.1 /lib64
   ignore_errors: yes
+
+- name: copy nginx to /etc/init.d/
+  copy: src=init_nginx dest=/etc/init.d/nginx owner=root group=root mode=0755
+  sudo: yes

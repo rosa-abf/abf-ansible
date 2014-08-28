@@ -1,5 +1,8 @@
 ---
 
+- name: rhel | synchronize the system clock
+  shell: ntpdate pool.ntp.org
+
 - name: rhel | install useful soft
   yum: pkg={{ item }} state=present
   with_items:

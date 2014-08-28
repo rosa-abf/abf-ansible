@@ -66,14 +66,12 @@
   template: src=file-store.conf dest=/etc/nginx/conf.d/file-store.conf
   sudo: yes
 
-- name: nginx | stop nginx
+- name: nginx | restart nginx
+  action: service name=nginx state=restarted
   sudo: yes
-  command: nginx -s stop
-  ignore_errors: yes
 
-- name: nginx | start nginx
-  sudo: yes
-  command: nginx
+- name: autostart nginx
+  command: sudo chkconfig --levels 235 nginx on
 
 - include: iptables.yml
 - include: deploy.yml
