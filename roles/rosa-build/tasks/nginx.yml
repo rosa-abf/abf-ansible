@@ -28,3 +28,7 @@
 - name: nginx | restart nginx
   sudo: true
   action: service name=nginx state=restarted
+
+- name: autostart nginx
+  command: sudo chkconfig --levels 235 nginx on
+
