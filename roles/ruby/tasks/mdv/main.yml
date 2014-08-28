@@ -28,6 +28,7 @@
     regexp='^#[\s]?PermitUserEnvironment'
     line='PermitUserEnvironment yes'
   tags: config-sudoers
+  when: config_bashrc.changed
 
 - name: mdv | disable 'UsePrivilegeSeparation sandbox' in sudoers
   sudo: yes
@@ -38,6 +39,7 @@
     regexp='^UsePrivilegeSeparation'
     line='# UsePrivilegeSeparation sandbox    # Default for new installations.'
   tags: config-sudoers
+  when: config_bashrc.changed
 
 - name: mdv | restart sshd
   sudo: yes
