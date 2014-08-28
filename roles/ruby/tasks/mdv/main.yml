@@ -17,6 +17,7 @@
     insertbefore='BOF'
     line='[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*'
   tags: config-bashrc
+  register: config_bashrc
 
 - name: mdv | enable 'PermitUserEnvironment yes' in sudoers
   sudo: yes
@@ -37,9 +38,8 @@
     regexp='^UsePrivilegeSeparation'
     line='# UsePrivilegeSeparation sandbox    # Default for new installations.'
   tags: config-sudoers
-  register: config_sudoers
 
 - name: mdv | restart sshd
   sudo: yes
   action: service name=sshd state=restarted
-  when: config_sudoers.changed
+  when: config_bashrc.changed
