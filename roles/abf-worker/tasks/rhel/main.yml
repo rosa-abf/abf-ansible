@@ -3,15 +3,15 @@
 - include: centos7.yml
   when: platform_name == "centos"
 
-- name: add the EPEL repo
+- name: rhel | add the EPEL repo
   # command: sudo rpm -ivh http://mirror.1000mbps.com/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
   command: sudo rpm -ivh http://mirror.yandex.ru/epel/6Server/x86_64/epel-release-6-8.noarch.rpm
   ignore_errors: yes
 
-- name: install the latest version of lxc
+- name: rhel | install the latest version of lxc
   command: sudo yum -y install --enablerepo=epel-testing lxc lxc-libs lxc-templates debootstrap
 
-- name: add abf-worker-service repo
+- name: rhel | add abf-worker-service repo
   copy: >
     src=roles/abf-worker/files/rosa-server65/abf-worker-service.repo
     dest=/etc/yum.repos.d/abf-worker-service.repo
@@ -19,7 +19,7 @@
   sudo: yes
 #  when: platform_name == "rosa-server65"
 
-- name: install bsdtar, redir
+- name: rhel | install bsdtar, redir
   yum: pkg={{ item }} state=present
   sudo: yes
   with_items:

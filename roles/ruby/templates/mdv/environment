@@ -1,0 +1,1 @@
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/games:/usr/lib/qt4/bin:/home/{{ user }}/.rvm/bin:/usr/sbin:/home/{{ user }}/.rvm/bin:/home/{{ user }}/bin

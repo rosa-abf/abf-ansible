@@ -1,6 +1,6 @@
 ---
 
-- name: install the latest version of lxc, ...
+- name: deb | install the latest version of lxc, ...
   apt: pkg={{ item }} state=present
   sudo: yes
   with_items:

@@ -1,18 +1,25 @@
 ---
 
-- name: install rvm
-  shell: \curl -L https://get.rvm.io | bash -s stable
+- name: default | check rvm
+  shell: rvm list
+  ignore_errors: true
+  register: check_rvm
 
-- name: CentOS/RHEL 6, 64 Bit x86_64
+- name: default | install rvm
+  # shell: \curl -L https://get.rvm.io | bash -s stable
+  shell: \curl -L https://get.rvm.io | bash -s -- --source abf.io/abf/rvm --branch rvm-openmandriva
+  when: check_rvm.rc != 0
+
+- name: default | CentOS/RHEL 6, 64 Bit x86_64
   command: sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
   ignore_errors: true
   when: platform_name is defined and platform_name == "centos6.5" and ignore_epel is not defined
 
-- name: install rvm requirements
+- name: default | install rvm requirements
   shell: rvm requirements
 
-- name: install ruby
+- name: default | install ruby
   shell: rvm install {{ ruby_version }}
 
-- name: set default ruby
+- name: default | set default ruby
   shell: rvm ruby-{{ ruby_version }} do rvm use {{ ruby_version }} --default

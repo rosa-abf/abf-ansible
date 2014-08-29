@@ -1,6 +1,6 @@
 ---
 
-- name: add ~/.rvm/scripts/rvm to .bashrc
+- name: deb | add ~/.rvm/scripts/rvm to .bashrc
   lineinfile: >
     dest=/home/{{ user }}/.bashrc
     backup=yes

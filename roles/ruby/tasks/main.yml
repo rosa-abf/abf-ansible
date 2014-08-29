@@ -1,7 +1,7 @@
 ---
 
-# - hosts: rhel-hosts
-#   include: "rhel/main.yml"
+- hosts: rhel-hosts
+  include: "rhel/main.yml"
 
 - include: "mdv/main.yml"
   when: platform_type == 'mdv'

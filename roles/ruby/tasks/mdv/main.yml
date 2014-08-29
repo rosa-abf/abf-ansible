@@ -1,4 +1,47 @@
 ---
 
-# TODO
-# - name: prepare install rvm
+- name: mdv | install requirements
+  urpmi: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+    - curl
+
+- name: mdv | creates ~/.ssh/environment
+  template: src=../../templates/mdv/environment dest=/home/{{ user }}/.ssh/environment owner={{ user }}
+
+- name: mdv | add ~/.rvm/scripts/rvm to .bashrc
+  lineinfile: >
+    dest=/home/{{ user }}/.bashrc
+    backup=yes
+    state=present
+    insertbefore='BOF'
+    line='[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*'
+  tags: config-bashrc
+  register: config_bashrc
+
+- name: mdv | enable 'PermitUserEnvironment yes' in sudoers
+  sudo: yes
+  lineinfile: >
+    dest=/etc/ssh/sshd_config
+    backup=yes
+    state=present
+    regexp='^#[\s]?PermitUserEnvironment'
+    line='PermitUserEnvironment yes'
+  tags: config-sudoers
+  when: config_bashrc.changed
+
+- name: mdv | disable 'UsePrivilegeSeparation sandbox' in sudoers
+  sudo: yes
+  lineinfile: >
+    dest=/etc/ssh/sshd_config
+    backup=yes
+    state=present
+    regexp='^UsePrivilegeSeparation'
+    line='# UsePrivilegeSeparation sandbox    # Default for new installations.'
+  tags: config-sudoers
+  when: config_bashrc.changed
+
+- name: mdv | restart sshd
+  sudo: yes
+  action: service name=sshd state=restarted
+  when: config_bashrc.changed
