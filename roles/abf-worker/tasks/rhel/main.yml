@@ -1,7 +1,7 @@
 ---
 
 - include: centos7.yml
-  when: platform_name == "centos"
+  when: platform_type == 'rhel' and platform_name == "centos"
 
 - name: rhel | add the EPEL repo
   # command: sudo rpm -ivh http://mirror.1000mbps.com/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
@@ -27,6 +27,7 @@
      - redir
 
 - include: rels.yml
-  when: platform_name == "rosa-server65"
+  when: platform_type == 'rhel' and platform_name == "rosa-server65"
 
 - include: lxc_setup.yml
+  when: platform_type == 'rhel'

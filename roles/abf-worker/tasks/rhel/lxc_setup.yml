@@ -6,7 +6,7 @@
   sudo: yes
   when: platform_name == "centos"
 
-- name: enable IPv4 forwarding
+- name: rhel | enable IPv4 forwarding
   lineinfile: >
     dest=/etc/sysctl.conf
     regexp='^net.ipv4.ip_forward = 0$'
