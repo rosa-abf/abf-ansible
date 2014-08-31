@@ -28,6 +28,8 @@ All command should be called from local PC
 
     cp abf-worker.hosts.example abf-worker.hosts
     # Update "abf-worker.hosts" file
+
+    # NOTE: for MDV distros you should run this command more 2 times as minimum
     ansible-playbook -i abf-worker.hosts abf-worker.yml
 
 

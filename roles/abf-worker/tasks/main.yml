@@ -48,6 +48,13 @@
     owner={{ user }}
   when: platform_type == 'rhel'
 
+- name: Use the existing virbr0 provided by libvirtd
+  copy: >
+    src=roles/abf-worker/files/mdv/Vagrantfile
+    dest=/home/{{ user }}/.vagrant.d/Vagrantfile
+    owner={{ user }}
+  when: platform_type == 'mdv'
+
 - name: copy box files (temporaly for speedup deploy)
   copy: >
     src=roles/abf-worker/files/boxes/

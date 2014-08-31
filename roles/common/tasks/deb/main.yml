@@ -1,6 +1,6 @@
 ---
 
-- name: install useful soft
+- name: deb | install useful soft
   apt: pkg={{ item }} state=present
   with_items:
     - git
