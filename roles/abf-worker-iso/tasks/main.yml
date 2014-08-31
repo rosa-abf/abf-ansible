@@ -1,2 +1,6 @@
 ---
 
+- name: run deploy:iso
+  command: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:iso ENV=production
+    chdir={{ deploy_to }}/scm

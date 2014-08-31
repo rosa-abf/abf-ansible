@@ -1,0 +1,6 @@
+---
+
+- name: run deploy:publish
+  command: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:publish ENV=production
+    chdir={{ deploy_to }}/scm

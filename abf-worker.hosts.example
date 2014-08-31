@@ -72,8 +72,8 @@ log_server_host=0.0.0.0
 
 [abf-worker:children]
 abf-worker-rpm
-# abf-worker-iso
-# abf-worker-publish
+abf-worker-iso
+abf-worker-publish
 
 [abf-worker:vars]
 # ansible_ssh_user=root   Comment because remote_user dont rewrite this
@@ -82,4 +82,3 @@ abf-worker-rpm
 airbrake_api_key='3c6209710087bfb53bd9604040a9c6ef'
 abf_url='https://abf.rosalinux.ru'
 file_store_url='http://file-store.rosalinux.ru'
-

@@ -39,3 +39,21 @@
   vars:
     ruby_version: 2.1.1
     deploy_to: /home/rosa/abf-worker
+
+- name: deploy abf-worker-iso
+  hosts: abf-worker-iso
+  remote_user: rosa
+  roles:
+    - abf-worker-iso
+  vars:
+    ruby_version: 2.1.1
+    deploy_to: /home/rosa/abf-worker
+
+- name: deploy abf-worker-publish
+  hosts: abf-worker-publish
+  remote_user: rosa
+  roles:
+    - abf-worker-publish
+  vars:
+    ruby_version: 2.1.1
+    deploy_to: /home/rosa/abf-worker
