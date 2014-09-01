@@ -85,4 +85,17 @@
 - name: creates application.yml
   template: src=application.yml dest={{ deploy_to }}/shared/config/application.yml owner={{ user }}
 
+- name: Updates limits file
+  lineinfile: >
+    dest=/etc/security/limits.conf
+    regexp='{{ item }}$'
+    line='{{ item }}'
+    owner=root group=root mode=0644
+  sudo: yes
+  with_items:
+    - 'rosa soft nofile 10000'
+    - 'rosa hard nofile 30000'
+    - 'root soft nofile 10000'
+    - 'root hard nofile 30000'
+
 - include: deploy.yml
