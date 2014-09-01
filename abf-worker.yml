@@ -35,25 +35,32 @@
   hosts: abf-worker-rpm
   remote_user: rosa
   roles:
-    - abf-worker-rpm
+    - abf-worker-deploy
   vars:
     ruby_version: 2.1.1
     deploy_to: /home/rosa/abf-worker
+    user: rosa
+    worker_type: rpm
 
 - name: deploy abf-worker-iso
   hosts: abf-worker-iso
   remote_user: rosa
   roles:
-    - abf-worker-iso
+    - abf-worker-deploy
   vars:
     ruby_version: 2.1.1
     deploy_to: /home/rosa/abf-worker
+    user: rosa
+    worker_type: iso
 
 - name: deploy abf-worker-publish
   hosts: abf-worker-publish
   remote_user: rosa
   roles:
-    - abf-worker-publish
+    - abf-worker-deploy
   vars:
     ruby_version: 2.1.1
     deploy_to: /home/rosa/abf-worker
+    user: rosa
+    worker_type: publish
+

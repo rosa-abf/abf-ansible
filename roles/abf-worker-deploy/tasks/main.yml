@@ -1,0 +1,6 @@
+---
+
+- name: run deploy:{{ worker_type }}
+  command: >
+    rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:{{ worker_type }} ENV=production
+    chdir={{ deploy_to }}/scm

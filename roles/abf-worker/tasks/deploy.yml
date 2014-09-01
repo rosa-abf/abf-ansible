@@ -46,4 +46,3 @@
   shell: >
     rvm {{ ruby_version }}@abf-worker-deploy do bundle exec cap production deploy:update ENV=production < /dev/null
     chdir={{ deploy_to }}/scm
-

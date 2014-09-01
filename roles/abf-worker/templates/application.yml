@@ -4,7 +4,7 @@ common: &common
   file_store:
     url: '{{ file_store_url }}/api/v1/file_stores'
     create_url: '{{ file_store_url }}/api/v1/upload'
-    token: {{ abf_token }}
+    token: '{{ abf_token }}'
   scripts:
     mdv:
       path: 'https://abf.rosalinux.ru/abf/mdv-scripts/archive/'
