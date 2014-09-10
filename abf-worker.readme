@@ -1,0 +1,19 @@
+# login/password
+root rosalab
+rosa rosalab
+
+# config files
+/home/rosa/abf-worker/shared/config/application.yml,vm.yml
+# additional config for iso & publish worker
+/home/rosa/abf-worker/shared/config/resque.yml
+
+# stop workers
+cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:stop ENV=production
+
+# start workers
+cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:rpm ENV=production
+cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:iso ENV=production
+cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:publish ENV=production
+
+# deploy update
+cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:update ENV=production < /dev/null

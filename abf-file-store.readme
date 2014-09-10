@@ -1,0 +1,11 @@
+# login/password
+root rosalab
+
+# config files
+/mnt/store/rosa_file_store/shared/config/application.yml,database.yml
+
+# file-store start
+cd /mnt/store/rosa_file_store/scm && rvm 2.1.1@rosa-file-store-deploy do bundle exec cap deploy:start ENV=production
+
+# deploy update
+rvm 2.1.1@rosa-file-store-deploy do bundle exec cap production deploy ENV=production < /dev/null
