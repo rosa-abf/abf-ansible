@@ -6,8 +6,8 @@
   register: check_rvm
 
 - name: default | install rvm
-  # shell: \curl -L https://get.rvm.io | bash -s stable
-  shell: \curl -L https://get.rvm.io | bash -s -- --source abf.io/abf/rvm --branch rvm-openmandriva
+  shell: \curl -L https://get.rvm.io | bash -s stable
+  # shell: \curl -L https://get.rvm.io | bash -s -- --source abf.io/abf/rvm --branch rvm-openmandriva
   when: check_rvm.rc != 0
 
 - name: default | CentOS/RHEL 6, 64 Bit x86_64
