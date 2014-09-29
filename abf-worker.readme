@@ -8,12 +8,12 @@ rosa rosalab
 /home/rosa/abf-worker/shared/config/resque.yml
 
 # stop workers
-cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:stop ENV=production
+cd /home/rosa/abf-worker/scm && rvm 2.1.3@abf-worker-deploy do bundle exec cap production deploy:stop ENV=production
 
 # start workers
-cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:rpm ENV=production
-cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:iso ENV=production
-cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:publish ENV=production
+cd /home/rosa/abf-worker/scm && rvm 2.1.3@abf-worker-deploy do bundle exec cap production deploy:rpm ENV=production
+cd /home/rosa/abf-worker/scm && rvm 2.1.3@abf-worker-deploy do bundle exec cap production deploy:iso ENV=production
+cd /home/rosa/abf-worker/scm && rvm 2.1.3@abf-worker-deploy do bundle exec cap production deploy:publish ENV=production
 
 # deploy update
-cd /home/rosa/abf-worker/scm && rvm 2.1.1@abf-worker-deploy do bundle exec cap production deploy:update ENV=production < /dev/null
+cd /home/rosa/abf-worker/scm && rvm 2.1.3@abf-worker-deploy do bundle exec cap production deploy:update ENV=production < /dev/null
