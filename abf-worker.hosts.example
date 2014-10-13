@@ -28,6 +28,8 @@ vm_x86_64         = 512
 vm_i586           = 512
 vm_cpus           = 2
 use_log_server    = false
+use_proxy         = false
+proxy_ip          = http://8.8.8.8:8080
 
 [abf-worker-rpm:children]
 abf-worker-rpm-moskow

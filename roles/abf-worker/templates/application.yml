@@ -15,10 +15,10 @@ common: &common
   max_workers_count: {{ max_workers_count }}
   supported_platforms: ''
   supported_arches: ''
-  {% if use_log_server == true %}
-  log_server:
-    host: {{ log_server_host }}
-    port: 6379
+  {% if use_log_server == 'true' %}
+log_server:
+  host: {{ log_server_host }}
+  port: 6379
   {% endif %}
 
   # Fix for DNS problems, configure proxy and etc
@@ -26,8 +26,9 @@ common: &common
     - sudo /bin/bash -c 'echo "{{ file_store_ip }} {{ file_store_domain }}" >> /etc/hosts'
     - sudo /bin/bash -c 'echo "{{ abf_ip1 }} {{ abf_domain1 }}" >> /etc/hosts'
     - sudo /bin/bash -c 'echo "{{ abf_ip2 }} {{ abf_domain2 }}" >> /etc/hosts'
-    # Only for hetzner
-    # - sudo /bin/bash -c 'echo "export ABF_DOWNLOADS_PROXY=176.9.26.227:3128" >> /etc/profile'
+    {% if use_proxy == 'true' %}
+- sudo /bin/bash -c 'echo "export ABF_DOWNLOADS_PROXY={{ proxy_ip }}" >> /etc/profile'
+    {% endif %}
 
 production:
   <<: *common
