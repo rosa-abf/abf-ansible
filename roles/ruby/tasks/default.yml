@@ -5,9 +5,13 @@
   ignore_errors: true
   register: check_rvm
 
+- name: gpg key
+  shell: gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  ignore_errors: true
+  when: check_rvm.rc != 0
+
 - name: default | install rvm
-  shell: \curl -L https://get.rvm.io | bash -s stable
-  # shell: \curl -L https://get.rvm.io | bash -s -- --source abf.io/abf/rvm --branch rvm-openmandriva
+  shell: \curl -sSL https://get.rvm.io | bash -s stable
   when: check_rvm.rc != 0
 
 - name: default | CentOS/RHEL 6, 64 Bit x86_64
