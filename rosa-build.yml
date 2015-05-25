@@ -77,7 +77,7 @@
   roles:
     - ruby
   vars:
-    ruby_version: 2.1.4
+    ruby_version: 2.2.2
 
 - name: setup rvm, ruby, gemset and etc. for git user
   hosts: rosa-build
@@ -85,7 +85,7 @@
   roles:
     - ruby
   vars:
-    ruby_version: 2.1.4
+    ruby_version: 2.2.2
     ignore_epel: true
 
 - name: Deploy
@@ -94,7 +94,7 @@
   roles:
     - rosa-build
   vars:
-    ruby_version: 2.1.4
+    ruby_version: 2.2.2
     deploy_to: /srv/rosa_build
     user: rosa
     repo: https://abf.io/abf/rosa-build.git
