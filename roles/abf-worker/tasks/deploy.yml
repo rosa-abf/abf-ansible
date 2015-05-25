@@ -25,7 +25,7 @@
   shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@abf-worker-deploy --create
 
 - name: deploy | install bundler
-  command: rvm {{ ruby_version }}@abf-worker-deploy do gem install bundler
+  command: rvm {{ ruby_version }}@abf-worker-deploy do gem install bundle
 
 - name: ensure abf-worker bundle is installed
   command: >
