@@ -9,11 +9,13 @@ common: &common
     mdv:
       path: 'https://abf.rosalinux.ru/abf/mdv-scripts/archive/'
       treeish: mdv-scripts-lxc
+      external_script: '{{ scripts_mdv_external_script }}'
     rhel:
       path: 'https://abf.rosalinux.ru/abf/rhel-scripts/archive/'
       treeish: rhel-scripts-lxc
+      external_script: '{{ scripts_rhel_external_script }}'
   max_workers_count: {{ max_workers_count }}
-  supported_platforms: ''
+  supported_platforms: '' 
   supported_arches: ''
   {% if use_log_server == 'true' %}
 log_server:

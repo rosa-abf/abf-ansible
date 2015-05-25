@@ -10,11 +10,23 @@ rpm4-centos7    ansible_ssh_port=2230 ansible_ssh_host=127.0.0.1
 iso1-moskow     ansible_ssh_port=2227 ansible_ssh_host=127.0.0.1
 publish1-moskow ansible_ssh_port=2228 ansible_ssh_host=127.0.0.1
 
+[abf-worker-rpm1-moskow]
+rpm1-moskow
+
+[rpm1-moskow:vars]
+abf_token                     = 'server-abf-worker-rpm-1'
+platform_type                 = 'rhel'
+platform_name                 = 'rosa-server65'
+scripts_mdv_external_script   = '/path/to/script1'
+scripts_rhel_external_script  = '/path/to/script2'
+
 [abf-worker-rpm-moskow]
-rpm1-moskow  abf_token='server-abf-worker-rpm-1' platform_type='rhel' platform_name='rosa-server65'
 rpm2-moskow  abf_token='server-abf-worker-rpm-2' platform_type='mdv'
 rpm3-moskow  abf_token='server-abf-worker-rpm-3' platform_type='deb'
 rpm4-centos7 abf_token='server-abf-worker-rpm-4' platform_type='rhel' platform_name='centos'
+
+[abf-worker-rpm-moskow:children]
+abf-worker-rpm1-moskow
 
 [abf-worker-rpm-moskow:vars]
 file_store_ip     = 195.19.76.233
@@ -79,6 +91,9 @@ abf-worker-publish
 
 [abf-worker:vars]
 # ansible_ssh_user=root   Comment because remote_user dont rewrite this
+
+scripts_mdv_external_script   = ''
+scripts_rhel_external_script  = ''
 
 # our public key
 airbrake_api_key='3c6209710087bfb53bd9604040a9c6ef'
