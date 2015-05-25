@@ -16,6 +16,9 @@
 - name: deploy | creates rvm gemset for deploy
   shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@rosa-file-store-deploy --create
 
+- name: deploy | install bundler
+  command: rvm {{ ruby_version }}@rosa-file-store-deploy do gem install bundler
+
 - name: deploy | ensure rosa-file-store bundle is installed
   command: >
     rvm {{ ruby_version }}@rosa-file-store-deploy do bundle install --without test

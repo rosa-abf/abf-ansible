@@ -44,6 +44,9 @@
 - name: deploy | creates rvm gemset for deploy
   shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@rosa_build_deploy --create
 
+- name: deploy | install bundler
+  command: rvm {{ ruby_version }}@rosa_build_deploy do gem install bundler
+
 - name: deploy | ensure rosa_build bundle is installed
   command: >
     rvm {{ ruby_version }}@rosa_build_deploy do bundle install --without test

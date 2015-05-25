@@ -24,6 +24,9 @@
 - name: creates rvm gemset for deploy
   shell: rvm ruby-{{ ruby_version }} do rvm {{ ruby_version }}@abf-worker-deploy --create
 
+- name: deploy | install bundler
+  command: rvm {{ ruby_version }}@abf-worker-deploy do gem install bundler
+
 - name: ensure abf-worker bundle is installed
   command: >
     rvm {{ ruby_version }}@abf-worker-deploy do bundle install --without test
