@@ -106,7 +106,7 @@
 
     gitlab_shell:
       repo: https://abf.io/abf/gitlab-shell.git
-      branch: ruby-2.1.4
+      branch: master
 
     nginx:
       # use_ssl - true/false
